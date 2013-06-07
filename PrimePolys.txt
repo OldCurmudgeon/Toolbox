@@ -1,0 +1,348 @@
+Degree: 2
+Prime poly: x^2 + x + 1
+Degree: 3
+Prime poly: x^3 + x + 1
+Prime poly: x^3 + x^2 + 1
+Degree: 4
+Prime poly: x^4 + x + 1
+Prime poly: x^4 + x^3 + 1
+Prime poly: x^4 + x^3 + x^2 + x + 1
+Degree: 5
+Prime poly: x^5 + x^2 + 1
+Prime poly: x^5 + x^3 + 1
+Prime poly: x^5 + x^3 + x^2 + x + 1
+Prime poly: x^5 + x^4 + x^2 + x + 1
+Prime poly: x^5 + x^4 + x^3 + x + 1
+Prime poly: x^5 + x^4 + x^3 + x^2 + 1
+Degree: 6
+Prime poly: x^6 + x + 1
+Prime poly: x^6 + x^3 + 1
+Prime poly: x^6 + x^5 + 1
+Prime poly: x^6 + x^4 + x^2 + x + 1
+Prime poly: x^6 + x^4 + x^3 + x + 1
+Prime poly: x^6 + x^5 + x^2 + x + 1
+Prime poly: x^6 + x^5 + x^3 + x^2 + 1
+Prime poly: x^6 + x^5 + x^4 + x + 1
+Prime poly: x^6 + x^5 + x^4 + x^2 + 1
+Degree: 7
+Prime poly: x^7 + x + 1
+Prime poly: x^7 + x^3 + 1
+Prime poly: x^7 + x^4 + 1
+Prime poly: x^7 + x^6 + 1
+Prime poly: x^7 + x^3 + x^2 + x + 1
+Prime poly: x^7 + x^4 + x^3 + x^2 + 1
+Prime poly: x^7 + x^5 + x^2 + x + 1
+Prime poly: x^7 + x^5 + x^3 + x + 1
+Prime poly: x^7 + x^5 + x^4 + x^3 + 1
+Prime poly: x^7 + x^6 + x^3 + x + 1
+...
+Degree: 8
+Prime poly: x^8 + x^4 + x^3 + x + 1
+Prime poly: x^8 + x^4 + x^3 + x^2 + 1
+Prime poly: x^8 + x^5 + x^3 + x + 1
+Prime poly: x^8 + x^5 + x^3 + x^2 + 1
+Prime poly: x^8 + x^5 + x^4 + x^3 + 1
+Prime poly: x^8 + x^6 + x^3 + x^2 + 1
+Prime poly: x^8 + x^6 + x^5 + x + 1
+Prime poly: x^8 + x^6 + x^5 + x^2 + 1
+Prime poly: x^8 + x^6 + x^5 + x^3 + 1
+Prime poly: x^8 + x^6 + x^5 + x^4 + 1
+...
+Degree: 9
+Prime poly: x^9 + x + 1
+Prime poly: x^9 + x^4 + 1
+Prime poly: x^9 + x^5 + 1
+Prime poly: x^9 + x^8 + 1
+Prime poly: x^9 + x^4 + x^2 + x + 1
+Prime poly: x^9 + x^4 + x^3 + x + 1
+Prime poly: x^9 + x^5 + x^3 + x^2 + 1
+Prime poly: x^9 + x^5 + x^4 + x + 1
+Prime poly: x^9 + x^6 + x^3 + x + 1
+Prime poly: x^9 + x^6 + x^4 + x^3 + 1
+...
+Degree: 10
+Prime poly: x^10 + x^3 + 1
+Prime poly: x^10 + x^7 + 1
+Prime poly: x^10 + x^3 + x^2 + x + 1
+Prime poly: x^10 + x^4 + x^3 + x + 1
+Prime poly: x^10 + x^4 + x^3 + x^2 + 1
+Prime poly: x^10 + x^5 + x^2 + x + 1
+Prime poly: x^10 + x^5 + x^3 + x^2 + 1
+Prime poly: x^10 + x^5 + x^4 + x^2 + 1
+Prime poly: x^10 + x^6 + x^2 + x + 1
+Prime poly: x^10 + x^6 + x^4 + x + 1
+...
+Degree: 11
+Prime poly: x^11 + x^2 + 1
+Prime poly: x^11 + x^9 + 1
+Prime poly: x^11 + x^4 + x^2 + x + 1
+Prime poly: x^11 + x^5 + x^3 + x + 1
+Prime poly: x^11 + x^5 + x^3 + x^2 + 1
+Prime poly: x^11 + x^6 + x^2 + x + 1
+Prime poly: x^11 + x^6 + x^5 + x + 1
+Prime poly: x^11 + x^6 + x^5 + x^2 + 1
+Prime poly: x^11 + x^6 + x^5 + x^4 + 1
+Prime poly: x^11 + x^7 + x^3 + x^2 + 1
+...
+Degree: 12
+Prime poly: x^12 + x^3 + 1
+Prime poly: x^12 + x^5 + 1
+Prime poly: x^12 + x^7 + 1
+Prime poly: x^12 + x^9 + 1
+Prime poly: x^12 + x^4 + x^2 + x + 1
+Prime poly: x^12 + x^5 + x^4 + x + 1
+Prime poly: x^12 + x^5 + x^4 + x^2 + 1
+Prime poly: x^12 + x^6 + x^3 + x^2 + 1
+Prime poly: x^12 + x^6 + x^4 + x + 1
+Prime poly: x^12 + x^6 + x^5 + x^3 + 1
+...
+Degree: 13
+Prime poly: x^13 + x^4 + x^3 + x + 1
+Prime poly: x^13 + x^5 + x^2 + x + 1
+Prime poly: x^13 + x^5 + x^4 + x^2 + 1
+Prime poly: x^13 + x^6 + x^4 + x + 1
+Prime poly: x^13 + x^6 + x^5 + x^2 + 1
+Prime poly: x^13 + x^7 + x^3 + x + 1
+Prime poly: x^13 + x^7 + x^3 + x^2 + 1
+Prime poly: x^13 + x^7 + x^5 + x^2 + 1
+Prime poly: x^13 + x^7 + x^6 + x + 1
+Prime poly: x^13 + x^7 + x^6 + x^3 + 1
+...
+Degree: 14
+Prime poly: x^14 + x^5 + 1
+Prime poly: x^14 + x^9 + 1
+Prime poly: x^14 + x^5 + x^3 + x + 1
+Prime poly: x^14 + x^5 + x^4 + x + 1
+Prime poly: x^14 + x^5 + x^4 + x^3 + 1
+Prime poly: x^14 + x^6 + x^4 + x + 1
+Prime poly: x^14 + x^6 + x^5 + x^2 + 1
+Prime poly: x^14 + x^7 + x^2 + x + 1
+Prime poly: x^14 + x^7 + x^5 + x^3 + 1
+Prime poly: x^14 + x^8 + x^3 + x + 1
+...
+Degree: 15
+Prime poly: x^15 + x + 1
+Prime poly: x^15 + x^4 + 1
+Prime poly: x^15 + x^7 + 1
+Prime poly: x^15 + x^8 + 1
+Prime poly: x^15 + x^11 + 1
+Prime poly: x^15 + x^14 + 1
+Prime poly: x^15 + x^4 + x^2 + x + 1
+Prime poly: x^15 + x^5 + x^3 + x^2 + 1
+Prime poly: x^15 + x^5 + x^4 + x^2 + 1
+Prime poly: x^15 + x^7 + x^2 + x + 1
+...
+Degree: 16
+Prime poly: x^16 + x^5 + x^3 + x + 1
+Prime poly: x^16 + x^5 + x^3 + x^2 + 1
+Prime poly: x^16 + x^5 + x^4 + x^3 + 1
+Prime poly: x^16 + x^6 + x^2 + x + 1
+Prime poly: x^16 + x^6 + x^4 + x + 1
+Prime poly: x^16 + x^7 + x^3 + x^2 + 1
+Prime poly: x^16 + x^8 + x^5 + x^3 + 1
+Prime poly: x^16 + x^8 + x^7 + x^5 + 1
+Prime poly: x^16 + x^9 + x^4 + x^2 + 1
+Prime poly: x^16 + x^9 + x^4 + x^3 + 1
+...
+Degree: 17
+Prime poly: x^17 + x^3 + 1
+Prime poly: x^17 + x^5 + 1
+Prime poly: x^17 + x^6 + 1
+Prime poly: x^17 + x^11 + 1
+Prime poly: x^17 + x^12 + 1
+Prime poly: x^17 + x^14 + 1
+Prime poly: x^17 + x^3 + x^2 + x + 1
+Prime poly: x^17 + x^5 + x^3 + x^2 + 1
+Prime poly: x^17 + x^5 + x^4 + x + 1
+Prime poly: x^17 + x^6 + x^4 + x^2 + 1
+...
+Degree: 18
+Prime poly: x^18 + x^3 + 1
+Prime poly: x^18 + x^7 + 1
+Prime poly: x^18 + x^9 + 1
+Prime poly: x^18 + x^11 + 1
+Prime poly: x^18 + x^15 + 1
+Prime poly: x^18 + x^5 + x^2 + x + 1
+Prime poly: x^18 + x^6 + x^3 + x^2 + 1
+Prime poly: x^18 + x^7 + x^4 + x^3 + 1
+Prime poly: x^18 + x^7 + x^6 + x + 1
+Prime poly: x^18 + x^8 + x^2 + x + 1
+...
+Degree: 19
+Prime poly: x^19 + x^5 + x^2 + x + 1
+Prime poly: x^19 + x^6 + x^2 + x + 1
+Prime poly: x^19 + x^6 + x^4 + x + 1
+Prime poly: x^19 + x^6 + x^4 + x^3 + 1
+Prime poly: x^19 + x^6 + x^5 + x + 1
+Prime poly: x^19 + x^7 + x^4 + x + 1
+Prime poly: x^19 + x^7 + x^6 + x^5 + 1
+Prime poly: x^19 + x^8 + x^6 + x + 1
+Prime poly: x^19 + x^8 + x^6 + x^5 + 1
+Prime poly: x^19 + x^8 + x^7 + x^2 + 1
+...
+Degree: 20
+Prime poly: x^20 + x^3 + 1
+Prime poly: x^20 + x^5 + 1
+Prime poly: x^20 + x^15 + 1
+Prime poly: x^20 + x^17 + 1
+Prime poly: x^20 + x^3 + x^2 + x + 1
+Prime poly: x^20 + x^4 + x^2 + x + 1
+Prime poly: x^20 + x^6 + x^2 + x + 1
+Prime poly: x^20 + x^6 + x^4 + x + 1
+Prime poly: x^20 + x^6 + x^5 + x^2 + 1
+Prime poly: x^20 + x^6 + x^5 + x^3 + 1
+...
+Degree: 21
+Prime poly: x^21 + x^2 + 1
+Prime poly: x^21 + x^7 + 1
+Prime poly: x^21 + x^14 + 1
+Prime poly: x^21 + x^19 + 1
+Prime poly: x^21 + x^5 + x^2 + x + 1
+Prime poly: x^21 + x^6 + x^5 + x^2 + 1
+Prime poly: x^21 + x^7 + x^4 + x + 1
+Prime poly: x^21 + x^8 + x^2 + x + 1
+Prime poly: x^21 + x^8 + x^6 + x^3 + 1
+Prime poly: x^21 + x^8 + x^7 + x^2 + 1
+...
+Degree: 22
+Prime poly: x^22 + x + 1
+Prime poly: x^22 + x^21 + 1
+Prime poly: x^22 + x^5 + x^2 + x + 1
+Prime poly: x^22 + x^5 + x^3 + x + 1
+Prime poly: x^22 + x^5 + x^4 + x^3 + 1
+Prime poly: x^22 + x^6 + x^5 + x^2 + 1
+Prime poly: x^22 + x^7 + x^3 + x + 1
+Prime poly: x^22 + x^7 + x^6 + x + 1
+Prime poly: x^22 + x^7 + x^6 + x^3 + 1
+Prime poly: x^22 + x^8 + x^2 + x + 1
+...
+Degree: 23
+Prime poly: x^23 + x^5 + 1
+Prime poly: x^23 + x^9 + 1
+Prime poly: x^23 + x^14 + 1
+Prime poly: x^23 + x^18 + 1
+Prime poly: x^23 + x^5 + x^3 + x + 1
+Prime poly: x^23 + x^5 + x^3 + x^2 + 1
+Prime poly: x^23 + x^5 + x^4 + x + 1
+Prime poly: x^23 + x^6 + x^3 + x^2 + 1
+Prime poly: x^23 + x^6 + x^5 + x^2 + 1
+Prime poly: x^23 + x^7 + x^2 + x + 1
+...
+Degree: 24
+Prime poly: x^24 + x^4 + x^3 + x + 1
+Prime poly: x^24 + x^7 + x^2 + x + 1
+Prime poly: x^24 + x^7 + x^4 + x^2 + 1
+Prime poly: x^24 + x^7 + x^5 + x^4 + 1
+Prime poly: x^24 + x^8 + x^3 + x^2 + 1
+Prime poly: x^24 + x^8 + x^5 + x^2 + 1
+Prime poly: x^24 + x^9 + x^3 + x + 1
+Prime poly: x^24 + x^9 + x^5 + x^2 + 1
+Prime poly: x^24 + x^9 + x^6 + x^4 + 1
+Prime poly: x^24 + x^9 + x^7 + x^3 + 1
+...
+Degree: 25
+Prime poly: x^25 + x^3 + 1
+Prime poly: x^25 + x^7 + 1
+Prime poly: x^25 + x^18 + 1
+Prime poly: x^25 + x^22 + 1
+Prime poly: x^25 + x^3 + x^2 + x + 1
+Prime poly: x^25 + x^5 + x^3 + x^2 + 1
+Prime poly: x^25 + x^7 + x^4 + x + 1
+Prime poly: x^25 + x^7 + x^6 + x^2 + 1
+Prime poly: x^25 + x^8 + x^3 + x^2 + 1
+Prime poly: x^25 + x^8 + x^6 + x^2 + 1
+...
+Degree: 26
+Prime poly: x^26 + x^4 + x^3 + x + 1
+Prime poly: x^26 + x^6 + x^2 + x + 1
+Prime poly: x^26 + x^6 + x^3 + x^2 + 1
+Prime poly: x^26 + x^6 + x^5 + x + 1
+Prime poly: x^26 + x^7 + x^5 + x^4 + 1
+Prime poly: x^26 + x^7 + x^6 + x^5 + 1
+Prime poly: x^26 + x^8 + x^4 + x^3 + 1
+Prime poly: x^26 + x^8 + x^7 + x + 1
+Prime poly: x^26 + x^8 + x^7 + x^3 + 1
+Prime poly: x^26 + x^9 + x^4 + x + 1
+...
+Degree: 27
+Prime poly: x^27 + x^5 + x^2 + x + 1
+Prime poly: x^27 + x^6 + x^5 + x^3 + 1
+Prime poly: x^27 + x^7 + x^6 + x^4 + 1
+Prime poly: x^27 + x^8 + x^5 + x^3 + 1
+Prime poly: x^27 + x^8 + x^5 + x^4 + 1
+Prime poly: x^27 + x^8 + x^6 + x^2 + 1
+Prime poly: x^27 + x^8 + x^7 + x + 1
+Prime poly: x^27 + x^9 + x^5 + x^2 + 1
+Prime poly: x^27 + x^9 + x^5 + x^3 + 1
+Prime poly: x^27 + x^9 + x^6 + x^4 + 1
+...
+Degree: 28
+Prime poly: x^28 + x + 1
+Prime poly: x^28 + x^3 + 1
+Prime poly: x^28 + x^9 + 1
+Prime poly: x^28 + x^13 + 1
+Prime poly: x^28 + x^15 + 1
+Prime poly: x^28 + x^19 + 1
+Prime poly: x^28 + x^25 + 1
+Prime poly: x^28 + x^27 + 1
+Prime poly: x^28 + x^3 + x^2 + x + 1
+Prime poly: x^28 + x^6 + x^4 + x + 1
+...
+Degree: 29
+Prime poly: x^29 + x^2 + 1
+Prime poly: x^29 + x^27 + 1
+Prime poly: x^29 + x^4 + x^2 + x + 1
+Prime poly: x^29 + x^4 + x^3 + x^2 + 1
+Prime poly: x^29 + x^7 + x^3 + x^2 + 1
+Prime poly: x^29 + x^7 + x^6 + x + 1
+Prime poly: x^29 + x^8 + x^4 + x^3 + 1
+Prime poly: x^29 + x^8 + x^7 + x^3 + 1
+Prime poly: x^29 + x^8 + x^7 + x^4 + 1
+Prime poly: x^29 + x^9 + x^2 + x + 1
+...
+Degree: 30
+Prime poly: x^30 + x + 1
+Prime poly: x^30 + x^9 + 1
+Prime poly: x^30 + x^21 + 1
+Prime poly: x^30 + x^29 + 1
+Prime poly: x^30 + x^6 + x^4 + x + 1
+Prime poly: x^30 + x^7 + x^3 + x + 1
+Prime poly: x^30 + x^8 + x^4 + x + 1
+Prime poly: x^30 + x^8 + x^5 + x + 1
+Prime poly: x^30 + x^8 + x^6 + x^3 + 1
+Prime poly: x^30 + x^8 + x^6 + x^5 + 1
+...
+Degree: 31
+Prime poly: x^31 + x^3 + 1
+Prime poly: x^31 + x^6 + 1
+Prime poly: x^31 + x^7 + 1
+Prime poly: x^31 + x^13 + 1
+Prime poly: x^31 + x^18 + 1
+Prime poly: x^31 + x^24 + 1
+Prime poly: x^31 + x^25 + 1
+Prime poly: x^31 + x^28 + 1
+Prime poly: x^31 + x^3 + x^2 + x + 1
+Prime poly: x^31 + x^5 + x^3 + x^2 + 1
+...
+Degree: 95
+Prime poly: x^95 + x^11 + 1
+Prime poly: x^95 + x^17 + 1
+Prime poly: x^95 + x^78 + 1
+Prime poly: x^95 + x^84 + 1
+Prime poly: x^95 + x^7 + x^5 + x + 1
+...
+Degree: 96
+Prime poly: x^96 + x^10 + x^9 + x^6 + 1
+Prime poly: x^96 + x^11 + x^10 + x^5 + 1
+Prime poly: x^96 + x^12 + x^9 + x^7 + 1
+Prime poly: x^96 + x^13 + x^9 + x^6 + 1
+Prime poly: x^96 + x^13 + x^11 + x^8 + 1
+...
+Degree: 255
+Prime poly: x^255 + x^52 + 1
+Prime poly: x^255 + x^56 + 1
+...
+Degree: 256
+Prime poly: x^256 + x^10 + x^5 + x^2 + 1
+Prime poly: x^256 + x^16 + x^3 + x + 1
+...
