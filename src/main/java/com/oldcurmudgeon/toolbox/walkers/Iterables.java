@@ -149,12 +149,12 @@ public class Iterables {
         // Are we equal?
         diff = it1.compareTo(it2);
       } else {
-        // i2 exhausted! I am greater!
+        // i2 exhausted! i1 is greater!
         diff = 1;
       }
     }
     if ( diff == 0 ) {
-      // i1 exhausted! I am less!
+      // i1 exhausted! i2 is less!
       diff = -1;
     }
     // All the same!
