@@ -139,4 +139,25 @@ public class Iterables {
       }
     };
   }
+  
+  public static<T extends Comparable<T>> int compare(Iterator<T> i1, Iterator<T> i2) {
+    int diff = 0;
+    while ( i1.hasNext() && diff == 0 ) {
+      T it1 = i1.next();
+      if ( i2.hasNext() ) {
+        T it2 = i2.next();
+        // Are we equal?
+        diff = it1.compareTo(it2);
+      } else {
+        // i2 exhausted! I am greater!
+        diff = 1;
+      }
+    }
+    if ( diff == 0 ) {
+      // i1 exhausted! I am less!
+      diff = -1;
+    }
+    // All the same!
+    return 0;
+  }
 }
