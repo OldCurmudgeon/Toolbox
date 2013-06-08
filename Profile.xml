@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ExportedView Name="Live Results" type="table">
+ <TableData NumRows="38" NumColumns="4">
+  <TableHeader>   <TableColumn><![CDATA[Hot Spots - Method]]></TableColumn>
+   <TableColumn><![CDATA[Self time [%]]]></TableColumn>
+   <TableColumn><![CDATA[Self time]]></TableColumn>
+   <TableColumn><![CDATA[Self time (CPU)]]></TableColumn>
+   <TableColumn><![CDATA[Samples]]></TableColumn>
+  </TableHeader>
+  <TableBody>
+   <TableRow>
+    <TableColumn><![CDATA[com.oldcurmudgeon.toolbox.polynomial.Polynomial$Primitivity.test(com.oldcurmudgeon.toolbox.polynomial.Polynomial)]]></TableColumn>
+    <TableColumn><![CDATA[47.48%]]></TableColumn>
+    <TableColumn><![CDATA[442806.466 ms]]></TableColumn>
+    <TableColumn><![CDATA[5521.773 ms]]></TableColumn>
+    <TableColumn><![CDATA[11]]></TableColumn>
+  </TableRow>
+   <TableRow>
+    <TableColumn><![CDATA[com.oldcurmudgeon.toolbox.polynomial.Polynomial$ReverseComparator.compare(java.math.BigInteger, java.math.BigInteger)]]></TableColumn>
+    <TableColumn><![CDATA[18.63%]]></TableColumn>
+    <TableColumn><![CDATA[173768.478 ms]]></TableColumn>
+    <TableColumn><![CDATA[173768.478 ms]]></TableColumn>
+    <TableColumn><![CDATA[9944]]></TableColumn>
+  </TableRow>
+   <TableRow>
+    <TableColumn><![CDATA[com.oldcurmudgeon.toolbox.polynomial.Polynomial.<init>(java.util.Collection)]]></TableColumn>
+    <TableColumn><![CDATA[11.22%]]></TableColumn>
+    <TableColumn><![CDATA[104674.618 ms]]></TableColumn>
+    <TableColumn><![CDATA[104674.618 ms]]></TableColumn>
+    <TableColumn><![CDATA[9310]]></TableColumn>
+  </TableRow>
+   <TableRow>
+    <TableColumn><![CDATA[com.oldcurmudgeon.toolbox.polynomial.Polynomial.and(com.oldcurmudgeon.toolbox.polynomial.Polynomial)]]></TableColumn>
+    <TableColumn><![CDATA[5.95%]]></TableColumn>
+    <TableColumn><![CDATA[55464.71 ms]]></TableColumn>
+    <TableColumn><![CDATA[55464.71 ms]]></TableColumn>
+    <TableColumn><![CDATA[5018]]></TableColumn>
+  </TableRow>
+   <TableRow>
+    <TableColumn><![CDATA[com.oldcurmudgeon.toolbox.polynomial.Polynomial.xor(com.oldcurmudgeon.toolbox.polynomial.Polynomial)]]></TableColumn>
+    <TableColumn><![CDATA[5.70%]]></TableColumn>
+    <TableColumn><![CDATA[53199.105 ms]]></TableColumn>
+    <TableColumn><![CDATA[53199.105 ms]]></TableColumn>
+    <TableColumn><![CDATA[4063]]></TableColumn>
+  </TableRow>
+   <TableRow>
+    <TableColumn><![CDATA[com.oldcurmudgeon.toolbox.polynomial.Polynomial.or(com.oldcurmudgeon.toolbox.polynomial.Polynomial)]]></TableColumn>
+    <TableColumn><![CDATA[5.35%]]></TableColumn>
+    <TableColumn><![CDATA[49930.319 ms]]></TableColumn>
+    <TableColumn><![CDATA[49930.319 ms]]></TableColumn>
+    <TableColumn><![CDATA[6275]]></TableColumn>
+  </TableRow>
+   <TableRow>
+    <TableColumn><![CDATA[com.oldcurmudgeon.toolbox.polynomial.Polynomial.shiftLeft(java.math.BigInteger)]]></TableColumn>
+    <TableColumn><![CDATA[2.42%]]></TableColumn>
+    <TableColumn><![CDATA[22576.378 ms]]></TableColumn>
+    <TableColumn><![CDATA[22576.378 ms]]></TableColumn>
+    <TableColumn><![CDATA[3277]]></TableColumn>
+  </TableRow>
+   <TableRow>
+    <TableColumn><![CDATA[com.oldcurmudgeon.toolbox.polynomial.Polynomial.createDegreesCollection()]]></TableColumn>
+    <TableColumn><![CDATA[1.68%]]></TableColumn>
+    <TableColumn><![CDATA[15667.72 ms]]></TableColumn>
+    <TableColumn><![CDATA[15652.595 ms]]></TableColumn>
+    <TableColumn><![CDATA[996]]></TableColumn>
+  </TableRow>
+   <TableRow>
+    <TableColumn><![CDATA[com.oldcurmudgeon.toolbox.polynomial.Polynomial.mod(com.oldcurmudgeon.toolbox.polynomial.Polynomial)]]></TableColumn>
+    <TableColumn><![CDATA[1.18%]]></TableColumn>
+    <TableColumn><![CDATA[10968.105 ms]]></TableColumn>
+    <TableColumn><![CDATA[10968.105 ms]]></TableColumn>
+    <TableColumn><![CDATA[86]]></TableColumn>
+  </TableRow>
+   <TableRow>
+    <TableColumn><![CDATA[com.oldcurmudgeon.toolbox.polynomial.Polynomial$Primitivity$Task.computeDirectly()]]></TableColumn>
+    <TableColumn><![CDATA[0.26%]]></TableColumn>
+    <TableColumn><![CDATA[2417.487 ms]]></TableColumn>
+    <TableColumn><![CDATA[2417.487 ms]]></TableColumn>
+    <TableColumn><![CDATA[55]]></TableColumn>
+  </TableRow>
+   <TableRow>
+    <TableColumn><![CDATA[com.oldcurmudgeon.toolbox.polynomial.Polynomial.hasDegree(java.math.BigInteger)]]></TableColumn>
+    <TableColumn><![CDATA[0.09%]]></TableColumn>
+    <TableColumn><![CDATA[850.553 ms]]></TableColumn>
+    <TableColumn><![CDATA[850.553 ms]]></TableColumn>
+    <TableColumn><![CDATA[341]]></TableColumn>
+  </TableRow>
+   <TableRow>
+    <TableColumn><![CDATA[com.oldcurmudgeon.toolbox.polynomial.Polynomial.toPolynomialString()]]></TableColumn>
+    <TableColumn><![CDATA[0.01%]]></TableColumn>
+    <TableColumn><![CDATA[132.158 ms]]></TableColumn>
+    <TableColumn><![CDATA[132.158 ms]]></TableColumn>
+    <TableColumn><![CDATA[6]]></TableColumn>
+  </TableRow>
+   <TableRow>
+    <TableColumn><![CDATA[com.oldcurmudgeon.toolbox.polynomial.Polynomial$Primitivity.<clinit>]]></TableColumn>
+    <TableColumn><![CDATA[0.01%]]></TableColumn>
+    <TableColumn><![CDATA[50.652 ms]]></TableColumn>
+    <TableColumn><![CDATA[50.652 ms]]></TableColumn>
+    <TableColumn><![CDATA[1]]></TableColumn>
+  </TableRow>
+   <TableRow>
+    <TableColumn><![CDATA[com.oldcurmudgeon.toolbox.polynomial.Polynomial$PrimePolynomials$PrimeIterator.<init>(com.oldcurmudgeon.toolbox.polynomial.Polynomial.PrimePolynomials)]]></TableColumn>
+    <TableColumn><![CDATA[0.00%]]></TableColumn>
+    <TableColumn><![CDATA[31.596 ms]]></TableColumn>
+    <TableColumn><![CDATA[31.596 ms]]></TableColumn>
+    <TableColumn><![CDATA[1]]></TableColumn>
+  </TableRow>
+   <TableRow>
+    <TableColumn><![CDATA[com.oldcurmudgeon.toolbox.polynomial.Polynomial$PrimePolynomials.iterator()]]></TableColumn>
+    <TableColumn><![CDATA[0.00%]]></TableColumn>
+    <TableColumn><![CDATA[15.606 ms]]></TableColumn>
+    <TableColumn><![CDATA[15.606 ms]]></TableColumn>
+    <TableColumn><![CDATA[1]]></TableColumn>
+  </TableRow>
+   <TableRow>
+    <TableColumn><![CDATA[com.oldcurmudgeon.toolbox.polynomial.Polynomial.isEmpty()]]></TableColumn>
+    <TableColumn><![CDATA[0.00%]]></TableColumn>
+    <TableColumn><![CDATA[15.473 ms]]></TableColumn>
+    <TableColumn><![CDATA[15.473 ms]]></TableColumn>
+    <TableColumn><![CDATA[1]]></TableColumn>
+  </TableRow>
+   <TableRow>
+    <TableColumn><![CDATA[com.oldcurmudgeon.toolbox.polynomial.Polynomial$ReverseComparator.compare(Object, Object)]]></TableColumn>
+    <TableColumn><![CDATA[0.00%]]></TableColumn>
+    <TableColumn><![CDATA[0.0 ms]]></TableColumn>
+    <TableColumn><![CDATA[0.0 ms]]></TableColumn>
+    <TableColumn><![CDATA[9944]]></TableColumn>
+  </TableRow>
+   <TableRow>
+    <TableColumn><![CDATA[com.oldcurmudgeon.toolbox.polynomial.Polynomial.<init>()]]></TableColumn>
+    <TableColumn><![CDATA[0.00%]]></TableColumn>
+    <TableColumn><![CDATA[0.0 ms]]></TableColumn>
+    <TableColumn><![CDATA[0.0 ms]]></TableColumn>
+    <TableColumn><![CDATA[542]]></TableColumn>
+  </TableRow>
+   <TableRow>
+    <TableColumn><![CDATA[com.oldcurmudgeon.toolbox.polynomial.Polynomial$Primitivity$Task.compute()]]></TableColumn>
+    <TableColumn><![CDATA[0.00%]]></TableColumn>
+    <TableColumn><![CDATA[0.0 ms]]></TableColumn>
+    <TableColumn><![CDATA[0.0 ms]]></TableColumn>
+    <TableColumn><![CDATA[94]]></TableColumn>
+  </TableRow>
+   <TableRow>
+    <TableColumn><![CDATA[com.oldcurmudgeon.toolbox.polynomial.Polynomial$Primitivity$Task.compute()]]></TableColumn>
+    <TableColumn><![CDATA[0.00%]]></TableColumn>
+    <TableColumn><![CDATA[0.0 ms]]></TableColumn>
+    <TableColumn><![CDATA[0.0 ms]]></TableColumn>
+    <TableColumn><![CDATA[48]]></TableColumn>
+  </TableRow>
+   <TableRow>
+    <TableColumn><![CDATA[com.oldcurmudgeon.toolbox.polynomial.Polynomial.div(com.oldcurmudgeon.toolbox.polynomial.Polynomial)]]></TableColumn>
+    <TableColumn><![CDATA[0.00%]]></TableColumn>
+    <TableColumn><![CDATA[0.0 ms]]></TableColumn>
+    <TableColumn><![CDATA[0.0 ms]]></TableColumn>
+    <TableColumn><![CDATA[12]]></TableColumn>
+  </TableRow>
+   <TableRow>
+    <TableColumn><![CDATA[com.oldcurmudgeon.toolbox.polynomial.Polynomial$Primitivity.access$100(com.oldcurmudgeon.toolbox.polynomial.Polynomial)]]></TableColumn>
+    <TableColumn><![CDATA[0.00%]]></TableColumn>
+    <TableColumn><![CDATA[0.0 ms]]></TableColumn>
+    <TableColumn><![CDATA[0.0 ms]]></TableColumn>
+    <TableColumn><![CDATA[11]]></TableColumn>
+  </TableRow>
+   <TableRow>
+    <TableColumn><![CDATA[com.oldcurmudgeon.toolbox.polynomial.Polynomial.isPrimitive()]]></TableColumn>
+    <TableColumn><![CDATA[0.00%]]></TableColumn>
+    <TableColumn><![CDATA[0.0 ms]]></TableColumn>
+    <TableColumn><![CDATA[0.0 ms]]></TableColumn>
+    <TableColumn><![CDATA[11]]></TableColumn>
+  </TableRow>
+   <TableRow>
+    <TableColumn><![CDATA[com.oldcurmudgeon.toolbox.polynomial.Polynomial.getReducibilityBenOr()]]></TableColumn>
+    <TableColumn><![CDATA[0.00%]]></TableColumn>
+    <TableColumn><![CDATA[0.0 ms]]></TableColumn>
+    <TableColumn><![CDATA[0.0 ms]]></TableColumn>
+    <TableColumn><![CDATA[10]]></TableColumn>
+  </TableRow>
+   <TableRow>
+    <TableColumn><![CDATA[com.oldcurmudgeon.toolbox.polynomial.Polynomial.isReducible()]]></TableColumn>
+    <TableColumn><![CDATA[0.00%]]></TableColumn>
+    <TableColumn><![CDATA[0.0 ms]]></TableColumn>
+    <TableColumn><![CDATA[0.0 ms]]></TableColumn>
+    <TableColumn><![CDATA[10]]></TableColumn>
+  </TableRow>
+   <TableRow>
+    <TableColumn><![CDATA[com.oldcurmudgeon.toolbox.polynomial.Polynomial.getReducibility()]]></TableColumn>
+    <TableColumn><![CDATA[0.00%]]></TableColumn>
+    <TableColumn><![CDATA[0.0 ms]]></TableColumn>
+    <TableColumn><![CDATA[0.0 ms]]></TableColumn>
+    <TableColumn><![CDATA[10]]></TableColumn>
+  </TableRow>
+   <TableRow>
+    <TableColumn><![CDATA[com.oldcurmudgeon.toolbox.polynomial.Polynomial.gcd(com.oldcurmudgeon.toolbox.polynomial.Polynomial)]]></TableColumn>
+    <TableColumn><![CDATA[0.00%]]></TableColumn>
+    <TableColumn><![CDATA[0.0 ms]]></TableColumn>
+    <TableColumn><![CDATA[0.0 ms]]></TableColumn>
+    <TableColumn><![CDATA[8]]></TableColumn>
+  </TableRow>
+   <TableRow>
+    <TableColumn><![CDATA[com.oldcurmudgeon.toolbox.polynomial.Polynomial.toString()]]></TableColumn>
+    <TableColumn><![CDATA[0.00%]]></TableColumn>
+    <TableColumn><![CDATA[0.0 ms]]></TableColumn>
+    <TableColumn><![CDATA[0.0 ms]]></TableColumn>
+    <TableColumn><![CDATA[6]]></TableColumn>
+  </TableRow>
+   <TableRow>
+    <TableColumn><![CDATA[com.oldcurmudgeon.toolbox.polynomial.Polynomial.plus(com.oldcurmudgeon.toolbox.polynomial.Polynomial)]]></TableColumn>
+    <TableColumn><![CDATA[0.00%]]></TableColumn>
+    <TableColumn><![CDATA[0.0 ms]]></TableColumn>
+    <TableColumn><![CDATA[0.0 ms]]></TableColumn>
+    <TableColumn><![CDATA[6]]></TableColumn>
+  </TableRow>
+   <TableRow>
+    <TableColumn><![CDATA[com.oldcurmudgeon.toolbox.polynomial.Polynomial.<init>(com.oldcurmudgeon.toolbox.polynomial.Polynomial)]]></TableColumn>
+    <TableColumn><![CDATA[0.00%]]></TableColumn>
+    <TableColumn><![CDATA[0.0 ms]]></TableColumn>
+    <TableColumn><![CDATA[0.0 ms]]></TableColumn>
+    <TableColumn><![CDATA[6]]></TableColumn>
+  </TableRow>
+   <TableRow>
+    <TableColumn><![CDATA[com.oldcurmudgeon.toolbox.polynomial.Polynomial.reduceExponent(int)]]></TableColumn>
+    <TableColumn><![CDATA[0.00%]]></TableColumn>
+    <TableColumn><![CDATA[0.0 ms]]></TableColumn>
+    <TableColumn><![CDATA[0.0 ms]]></TableColumn>
+    <TableColumn><![CDATA[2]]></TableColumn>
+  </TableRow>
+   <TableRow>
+    <TableColumn><![CDATA[com.oldcurmudgeon.toolbox.polynomial.Polynomial$PrimePolynomials$PrimeIterator.hasNext()]]></TableColumn>
+    <TableColumn><![CDATA[0.00%]]></TableColumn>
+    <TableColumn><![CDATA[0.0 ms]]></TableColumn>
+    <TableColumn><![CDATA[0.0 ms]]></TableColumn>
+    <TableColumn><![CDATA[2]]></TableColumn>
+  </TableRow>
+   <TableRow>
+    <TableColumn><![CDATA[com.oldcurmudgeon.toolbox.polynomial.Polynomial.<clinit>]]></TableColumn>
+    <TableColumn><![CDATA[0.00%]]></TableColumn>
+    <TableColumn><![CDATA[0.0 ms]]></TableColumn>
+    <TableColumn><![CDATA[0.0 ms]]></TableColumn>
+    <TableColumn><![CDATA[1]]></TableColumn>
+  </TableRow>
+   <TableRow>
+    <TableColumn><![CDATA[com.oldcurmudgeon.toolbox.polynomial.Polynomial.createFrom(long)]]></TableColumn>
+    <TableColumn><![CDATA[0.00%]]></TableColumn>
+    <TableColumn><![CDATA[0.0 ms]]></TableColumn>
+    <TableColumn><![CDATA[0.0 ms]]></TableColumn>
+    <TableColumn><![CDATA[1]]></TableColumn>
+  </TableRow>
+   <TableRow>
+    <TableColumn><![CDATA[com.oldcurmudgeon.toolbox.polynomial.Polynomial.main(String[])]]></TableColumn>
+    <TableColumn><![CDATA[0.00%]]></TableColumn>
+    <TableColumn><![CDATA[0.0 ms]]></TableColumn>
+    <TableColumn><![CDATA[0.0 ms]]></TableColumn>
+    <TableColumn><![CDATA[1]]></TableColumn>
+  </TableRow>
+   <TableRow>
+    <TableColumn><![CDATA[com.oldcurmudgeon.toolbox.polynomial.Polynomial.generatePrimitivePolysUpToDegree(int, int, boolean)]]></TableColumn>
+    <TableColumn><![CDATA[0.00%]]></TableColumn>
+    <TableColumn><![CDATA[0.0 ms]]></TableColumn>
+    <TableColumn><![CDATA[0.0 ms]]></TableColumn>
+    <TableColumn><![CDATA[1]]></TableColumn>
+  </TableRow>
+   <TableRow>
+    <TableColumn><![CDATA[com.oldcurmudgeon.toolbox.polynomial.Polynomial.generatePrimitivePolys(int, int, boolean)]]></TableColumn>
+    <TableColumn><![CDATA[0.00%]]></TableColumn>
+    <TableColumn><![CDATA[0.0 ms]]></TableColumn>
+    <TableColumn><![CDATA[0.0 ms]]></TableColumn>
+    <TableColumn><![CDATA[1]]></TableColumn>
+  </TableRow>
+   <TableRow>
+    <TableColumn><![CDATA[com.oldcurmudgeon.toolbox.polynomial.Polynomial$PrimePolynomials$PrimeIterator.<init>(com.oldcurmudgeon.toolbox.polynomial.Polynomial.PrimePolynomials, com.oldcurmudgeon.toolbox.polynomial.Polynomial.1)]]></TableColumn>
+    <TableColumn><![CDATA[0.00%]]></TableColumn>
+    <TableColumn><![CDATA[0.0 ms]]></TableColumn>
+    <TableColumn><![CDATA[0.0 ms]]></TableColumn>
+    <TableColumn><![CDATA[1]]></TableColumn>
+  </TableRow>
+  </TableBody> </TableData>
+</ExportedView>
