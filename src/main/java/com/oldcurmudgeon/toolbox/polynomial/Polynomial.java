@@ -17,6 +17,8 @@ import java.util.concurrent.RecursiveTask;
  * https://code.google.com/p/rabinfingerprint/source/browse/trunk/src/org/bdwyer/galoisfield/Polynomial.java?r=4
  *
  * NB: All in Z[2]
+ * 
+ * Galois field http://www.ee.unb.ca/tervo/ee4253/poly.shtml
  *
  * @author themadcreator
  */
