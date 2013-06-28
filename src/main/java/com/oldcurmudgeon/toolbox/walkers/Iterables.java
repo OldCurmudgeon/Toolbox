@@ -16,6 +16,7 @@
 package com.oldcurmudgeon.toolbox.walkers;
 
 import java.util.Enumeration;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -115,6 +116,53 @@ public class Iterables {
 
   }
 
+  // Unique iterable.
+  public static <T> Iterable<T> unique(final Iterable<T> i) {
+    return new Iterable<T>() {
+      @Override
+      public Iterator<T> iterator() {
+        return new Iterator<T>() {
+          // The feed iterator.
+          Iterator<T> it = i.iterator();
+          // Next/
+          T next = null;
+          // Check for duplicates.
+          Set<T> done = new HashSet<>();
+
+          @Override
+          public boolean hasNext() {
+            while (next == null && it.hasNext()) {
+              T n = it.next();
+              if (done.contains(n)) {
+                // Already done that one.
+                n = null;
+              } else {
+                // Done it now.
+                done.add(n);
+              }
+              next = n;
+            }
+            return next != null;
+          }
+
+          @Override
+          public T next() {
+            // Standard - gove it and null it.
+            T n = next;
+            next = null;
+            return n;
+          }
+
+          @Override
+          public void remove() {
+            // Could have strange effects.
+            it.remove();
+          }
+        };
+      }
+    };
+  }
+
   // Empty iterable.
   public static <T> java.lang.Iterable<T> emptyIterable() {
     return in(Iterables.<T>emptyIterator());
@@ -139,12 +187,12 @@ public class Iterables {
       }
     };
   }
-  
-  public static<T extends Comparable<T>> int compare(Iterator<T> i1, Iterator<T> i2) {
+
+  public static <T extends Comparable<T>> int compare(Iterator<T> i1, Iterator<T> i2) {
     int diff = 0;
-    while ( i1.hasNext() && diff == 0 ) {
+    while (i1.hasNext() && diff == 0) {
       T it1 = i1.next();
-      if ( i2.hasNext() ) {
+      if (i2.hasNext()) {
         T it2 = i2.next();
         // Are we equal?
         diff = it1.compareTo(it2);
@@ -153,7 +201,7 @@ public class Iterables {
         diff = 1;
       }
     }
-    if ( diff == 0 ) {
+    if (diff == 0) {
       // i1 exhausted! i2 is less!
       diff = -1;
     }
