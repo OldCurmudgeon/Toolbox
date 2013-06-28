@@ -44,6 +44,7 @@ public class Iterables {
         used = true;
         return i;
       }
+
     }
     return new SingleUseIterable();
   }
@@ -74,8 +75,10 @@ public class Iterables {
           public void remove() {
             throw new UnsupportedOperationException("Not supported.");
           }
+
         };
       }
+
     }
     return new SingleUseIterable();
   }
@@ -109,8 +112,10 @@ public class Iterables {
           public void remove() {
             throw new UnsupportedOperationException("Not supported.");
           }
+
         };
       }
+
     }
     return new SingleUseIterable();
 
@@ -123,6 +128,7 @@ public class Iterables {
       public Iterator<T> iterator() {
         return new UniqueIterator<>(i.iterator());
       }
+
     };
   }
 
@@ -142,14 +148,13 @@ public class Iterables {
     public boolean hasNext() {
       while (next == null && i.hasNext()) {
         T n = i.next();
-        if (done.contains(n)) {
-          // Already done that one.
-          n = null;
-        } else {
+        // Already done that one?
+        if (!done.contains(n)) {
           // Done it now.
           done.add(n);
+          next = n;
         }
-        next = n;
+
       }
       return next != null;
     }
@@ -167,6 +172,7 @@ public class Iterables {
       // Could have strange effects.
       i.remove();
     }
+
   }
 
   // Empty iterable.
@@ -191,6 +197,7 @@ public class Iterables {
       public void remove() {
         throw new UnsupportedOperationException("Not supported.");
       }
+
     };
   }
 
@@ -214,4 +221,5 @@ public class Iterables {
     // All the same!
     return 0;
   }
+
 }
