@@ -121,46 +121,52 @@ public class Iterables {
     return new Iterable<T>() {
       @Override
       public Iterator<T> iterator() {
-        return new Iterator<T>() {
-          // The feed iterator.
-          Iterator<T> it = i.iterator();
-          // Next/
-          T next = null;
-          // Check for duplicates.
-          Set<T> done = new HashSet<>();
-
-          @Override
-          public boolean hasNext() {
-            while (next == null && it.hasNext()) {
-              T n = it.next();
-              if (done.contains(n)) {
-                // Already done that one.
-                n = null;
-              } else {
-                // Done it now.
-                done.add(n);
-              }
-              next = n;
-            }
-            return next != null;
-          }
-
-          @Override
-          public T next() {
-            // Standard - gove it and null it.
-            T n = next;
-            next = null;
-            return n;
-          }
-
-          @Override
-          public void remove() {
-            // Could have strange effects.
-            it.remove();
-          }
-        };
+        return new UniqueIterator<>(i.iterator());
       }
     };
+  }
+
+  private static class UniqueIterator<T> implements Iterator<T> {
+    // The feed iterator.
+    private final Iterator<T> i;
+    // Check for duplicates.
+    private final Set<T> done = new HashSet<>();
+    // Next
+    private T next = null;
+
+    public UniqueIterator(Iterator<T> i) {
+      this.i = i;
+    }
+
+    @Override
+    public boolean hasNext() {
+      while (next == null && i.hasNext()) {
+        T n = i.next();
+        if (done.contains(n)) {
+          // Already done that one.
+          n = null;
+        } else {
+          // Done it now.
+          done.add(n);
+        }
+        next = n;
+      }
+      return next != null;
+    }
+
+    @Override
+    public T next() {
+      // Standard - gove it and null it.
+      T n = next;
+      next = null;
+      return n;
+    }
+
+    @Override
+    public void remove() {
+      // Could have strange effects.
+      i.remove();
+    }
   }
 
   // Empty iterable.
