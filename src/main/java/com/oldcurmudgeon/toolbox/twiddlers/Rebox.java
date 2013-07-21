@@ -19,6 +19,11 @@ import java.util.Arrays;
 
 /**
  * Can rebox a boxed primitive array into its Object form.
+ * 
+ * Generally I HATE using instanceof because using it is usually 
+ * an indication that your hierarchy is completely wrong.
+ * 
+ * Reboxing - however - is an area I am ok using it.
  *
  * Generally, if a primitive array is passed to a varargs it
  * is wrapped up as the first and only component of an Object[].
