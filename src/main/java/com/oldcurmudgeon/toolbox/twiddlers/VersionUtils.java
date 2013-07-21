@@ -23,8 +23,6 @@ import java.lang.management.ThreadMXBean;
 import java.net.URL;
 import java.security.CodeSource;
 import java.security.ProtectionDomain;
-import java.text.FieldPosition;
-import java.util.Date;
 import java.util.jar.JarFile;
 import java.util.zip.ZipEntry;
 import org.slf4j.Logger;
@@ -92,7 +90,7 @@ public final class VersionUtils {
         // Try with class name too.
       }
     }
-    StringBuffer sb = new StringBuffer(name.length() + 20);
+    StringBuilder sb = new StringBuilder(name.length() + 20);
     sb.append(name);
     sb.append(" (");
     // TODO

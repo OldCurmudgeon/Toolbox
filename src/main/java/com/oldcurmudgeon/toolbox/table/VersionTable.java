@@ -15,8 +15,8 @@
  */
 package com.oldcurmudgeon.toolbox.table;
 
-import com.oldcurmudgeon.toolbox.table.Field.Type;
 import com.oldcurmudgeon.toolbox.containers.Params;
+import com.oldcurmudgeon.toolbox.table.Field.Type;
 import com.oldcurmudgeon.toolbox.twiddlers.Sleeps;
 import java.sql.SQLException;
 import java.util.EnumSet;

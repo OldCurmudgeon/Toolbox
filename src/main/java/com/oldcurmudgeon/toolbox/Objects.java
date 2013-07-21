@@ -23,13 +23,13 @@ import java.util.Arrays;
  */
 public class Objects {
 
-  public static <T> T[] newArray(int length, T... template) {
-    return Arrays.copyOfRange(template, 0, length);
+  public static <T> T[] newArray(int length, T... empty) {
+    return Arrays.copyOfRange(empty, 0, length);
   }
   
   public static void main(String[] args) {
     String[] strings = Objects.<String>newArray(5);
-    System.out.println(strings);
+    System.out.println(Arrays.asList(strings));
   }
   
 }

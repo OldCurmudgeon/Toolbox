@@ -16,8 +16,8 @@
 package com.oldcurmudgeon.toolbox.containers;
 
 import com.oldcurmudgeon.toolbox.twiddlers.RegexFilenameFilter;
-import com.oldcurmudgeon.toolbox.walkers.Separator;
 import com.oldcurmudgeon.toolbox.twiddlers.VersionUtils;
+import com.oldcurmudgeon.toolbox.walkers.Separator;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
