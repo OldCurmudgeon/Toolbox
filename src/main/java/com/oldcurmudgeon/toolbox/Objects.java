@@ -23,6 +23,7 @@ import java.util.Arrays;
  */
 public class Objects {
 
+  // Also in Rebox.
   public static <T> T[] newArray(int length, T... empty) {
     return Arrays.copyOfRange(empty, 0, length);
   }
