@@ -20,8 +20,8 @@ package com.oldcurmudgeon.toolbox.containers;
  * @author OldCurmudgeon
  */
 public class Pair<P,Q> {
-  private final P p;
-  private final Q q;
+  public final P p;
+  public final Q q;
   
   public Pair( P p, Q q ) {
     this.p = p;
