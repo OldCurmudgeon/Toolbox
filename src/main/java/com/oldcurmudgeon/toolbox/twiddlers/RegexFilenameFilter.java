@@ -17,9 +17,12 @@ package com.oldcurmudgeon.toolbox.twiddlers;
 
 import java.io.File;
 import java.io.FilenameFilter;
+import java.io.IOException;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Path;
 import java.util.regex.Pattern;
 
-public class RegexFilenameFilter implements FilenameFilter {
+public class RegexFilenameFilter implements FilenameFilter, DirectoryStream.Filter<Path> {
   /**
    * Only file name that match this regex are accepted by this filter
    */
@@ -79,6 +82,11 @@ public class RegexFilenameFilter implements FilenameFilter {
     return regex == null ? true : name.toLowerCase().matches(regex);
   }
 
+  @Override
+  public boolean accept(Path p) throws IOException {
+    return regex == null ? true : p.toString().toLowerCase().matches(regex);
+  }
+  
   /**
    * Converts a windows wildcard pattern to a regex pattern
    *
@@ -110,4 +118,5 @@ public class RegexFilenameFilter implements FilenameFilter {
 
     return buffer.toString();
   }
+
 }
