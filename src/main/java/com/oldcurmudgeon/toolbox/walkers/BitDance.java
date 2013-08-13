@@ -63,6 +63,7 @@ public class BitDance extends Filter<BigInteger> {
     }
     Collections.shuffle(bits);
     System.out.println("Sample: " + Separator.separate("{", ",", "}", bits));
+    // Test an 8-bit dance.
     int[] dance = new int[]{
       1, 3, 5, 7, 2, 4, 6, 0
     };
