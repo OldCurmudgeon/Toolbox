@@ -22,7 +22,7 @@ import java.util.Iterator;
  * Iterates all bit patterns containing the specified number of bits.
  *
  * See "Compute the lexicographically next bit permutation"
- * http://graphics.stanford.edu/~seander/bithacks.html
+ * http://graphics.stanford.edu/~seander/bithacks.html#NextBitPermutation
  *
  * @author OldCurmudgeon
  */
