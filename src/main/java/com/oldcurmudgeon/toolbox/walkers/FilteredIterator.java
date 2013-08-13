@@ -40,7 +40,7 @@ public class FilteredIterator<T> implements Iterator<T> {
     while (next == null && source.hasNext()) {
       T it = source.next();
       if (filter.accept(it)) {
-        next = it;
+        next = filter.filter(it);
       }
     }
     return next != null;

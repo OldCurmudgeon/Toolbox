@@ -16,11 +16,20 @@
 package com.oldcurmudgeon.toolbox.walkers;
 
 /**
- *
+ * Filters stuff.
+ * 
  * @author OldCurmudgeon
  */
-public interface Filter<T> {
+public abstract class Filter<T> {
   // Return true if this one should be accepted.
-  public boolean accept(T it);
+  public boolean accept(T it) {
+    // Default to accept.
+    return true;
+  }
+  // Return the filtered value.
+  public T filter(T it) {
+    // Default to unfiltered.
+    return it;
+  }
 
 }
