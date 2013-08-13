@@ -19,6 +19,7 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -45,7 +46,7 @@ public class BitDance extends Filter<BigInteger> {
   // Return the filtered value.
   @Override
   public BigInteger filter(BigInteger it) {
-    byte[] danced = new byte[(it.bitLength() + 7) / 8];
+    byte[] danced = new byte[(dance.length + 7) / 8];
     for (int i = 0; i < dance.length; i++) {
       if (it.testBit(i)) {
         danced[dance[i] / 8] |= 1 << (dance[i] % 8);
@@ -55,6 +56,11 @@ public class BitDance extends Filter<BigInteger> {
     return new BigInteger(it.signum(), danced);
   }
 
+  // Shortcut to filter an iterator with a dance.
+  public static Iterator<BigInteger> dance(Iterator<BigInteger> i, int[] dance) {
+    return new FilteredIterator(i, new BitDance(dance));
+  }
+  
   public static void main(String args[]) {
     // Print a random dance for n bits.
     List<Integer> bits = new ArrayList<>();

@@ -115,8 +115,18 @@ public class BitPattern implements Iterable<BigInteger> {
   }
 
   public static void main(String[] args) {
+    System.out.println("BitPattern(3, 10)");
     for (BigInteger i : new BitPattern(3, 10)) {
       System.out.println(i.toString(2));
+    }
+    int [] dance = {58,82,76,10,88,1,28,55,27,45,0,59,4,92,54,81,36,87,19,65,68,50,94,18,42,61,17,40,33,47,83,63,78,25,93,14,5,56,8,85,41,39,73,75,72,9,16,3,84,74,52,35,67,21,2,49,37,26,11,91,57,44,48,53,20,90,6,13,89,22,29,51,62,23,31,77,71,80,79,24,46,38,30,60,34,32,64,86,15,69,66,43,70,12,7};
+    System.out.println("BitDance(15, 95)");
+    int count = 1000;
+    for (BigInteger i : Iterables.in(BitDance.dance(new BitPattern(15, 95).iterator(), dance)) ) {
+      System.out.println(i.toString(2));
+      if ( --count < 0 ) {
+        break;
+      }
     }
   }
 
