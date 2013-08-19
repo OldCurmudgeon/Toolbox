@@ -33,4 +33,8 @@ public class Objects {
     System.out.println(Arrays.asList(strings));
   }
   
+  public static String asString(Object o, String dflt) {
+    return o != null ? o.toString() : dflt;
+  }
+  
 }
