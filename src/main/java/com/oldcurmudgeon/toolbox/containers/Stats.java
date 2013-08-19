@@ -115,7 +115,8 @@ public class Stats {
     @Override
     public String toString() {
       // toString adds from the totalee and clears it.
-      return String.valueOf(super.add(totalee.clr()));
+      super.add(totalee.clr());
+      return super.toString();
     }
 
   }
@@ -164,9 +165,8 @@ public class Stats {
       one.inc();
       two.add(2);
       log.info("Stats: " + stats);
-      TotalStat total = new TotalStat(one);
-      stats = new Stats(one, two, total);
-      Gatherer g = new Gatherer(1000, log, stats );
+      Stats tStats = new Stats(one, two, new TotalStat(one), new TotalStat(two));
+      Gatherer g = new Gatherer(1000, log, tStats );
       // Hang around for a while.
       long start = System.currentTimeMillis();
       while (System.currentTimeMillis() < start + 30000) {
@@ -174,6 +174,7 @@ public class Stats {
         one.inc();
         two.add(2);
       }
+      log.info("Stats: " + stats);
     } catch (Throwable t) {
       t.printStackTrace(System.err);
     }
