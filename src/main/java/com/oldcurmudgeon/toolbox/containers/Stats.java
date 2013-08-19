@@ -35,6 +35,7 @@ public class Stats {
   // A logger.
   private static final Logger log = LoggerFactory.getLogger("Stats");
   // A single statistic.
+
   public static class Stat<T> {
     protected T value;
     protected final String name;
@@ -50,7 +51,7 @@ public class Stats {
 
     @Override
     public String toString() {
-      return name + "=" + Objects.asString(value, "null");
+      return name + "=" + total();
     }
 
     public void setValue(T value) {
@@ -63,6 +64,10 @@ public class Stats {
 
     public T getValue() {
       return value;
+    }
+
+    public long total() {
+      return getValue() != null ? Long.valueOf(getValue().toString()) : 0;
     }
 
   }
@@ -101,22 +106,8 @@ public class Stats {
     }
 
     @Override
-    public long clr() {
-      // We don't clear a total.
-      return value.get();
-    }
-
-    @Override
-    public long add(long n) {
-      // No adding either.
-      return value.get();
-    }
-
-    @Override
-    public String toString() {
-      // toString adds from the totalee and clears it.
-      super.add(totalee.clr());
-      return super.toString();
+    public long total() {
+      return super.add(totalee.clr());
     }
 
   }
@@ -132,10 +123,12 @@ public class Stats {
   }
 
   static class Gatherer extends TimerTask {
+    private final String name;
     private final Stats stats;
     private final Logger log;
 
-    public Gatherer(long interval, Logger log, Stats stats) {
+    public Gatherer(String name, long interval, Logger log, Stats stats) {
+      this.name = name;
       this.log = log;
       this.stats = stats;
       // Make the timer a daemon.
@@ -146,7 +139,7 @@ public class Stats {
 
     @Override
     public void run() {
-      log.info(stats.toString());
+      log.info(name + ": {}", stats);
     }
 
   }
@@ -155,6 +148,10 @@ public class Stats {
   public String toString() {
     return Separator.separate(",", stats);
   }
+
+  static final long oneSecond = 1000;
+  static final long oneMinute = 1 * 60 * oneSecond;
+  static final long fiveMinutes = 5 * oneMinute;
 
   public static void main(String args[]) {
     try {
@@ -165,11 +162,17 @@ public class Stats {
       one.inc();
       two.add(2);
       log.info("Stats: " + stats);
-      Stats tStats = new Stats(one, two, new TotalStat(one), new TotalStat(two));
-      Gatherer g = new Gatherer(1000, log, tStats );
+      NumberStat totalOne = new TotalStat(one);
+      NumberStat totalTwo = new TotalStat(two);
+      Stats secondlyStats = new Stats(one, two, totalOne, totalTwo);
+      Gatherer gs = new Gatherer("Secondly", oneSecond, log, secondlyStats);
+      NumberStat minutelyOne = new TotalStat(totalOne);
+      NumberStat minutelyTwo = new TotalStat(totalTwo);
+      Stats minutelyStats = new Stats(minutelyOne, minutelyTwo);
+      Gatherer gm = new Gatherer("Minutely", oneMinute, log, minutelyStats);
       // Hang around for a while.
       long start = System.currentTimeMillis();
-      while (System.currentTimeMillis() < start + 30000) {
+      while (System.currentTimeMillis() < start + fiveMinutes) {
         Thread.sleep(1000);
         one.inc();
         two.add(2);
