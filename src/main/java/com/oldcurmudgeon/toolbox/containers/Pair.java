@@ -13,31 +13,82 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.oldcurmudgeon.toolbox.containers;
+
+import com.oldcurmudgeon.toolbox.walkers.Iterables;
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * @author OldCurmudgeon
  */
-public class Pair<P,Q> {
+public class Pair<P, Q> {
+
   public final P p;
   public final Q q;
-  
-  public Pair( P p, Q q ) {
+
+  public Pair(P p, Q q) {
     this.p = p;
     this.q = q;
   }
-  
-  public P getP () {
+
+  public P getP() {
     return p;
   }
 
-  public Q getQ () {
+  public Q getQ() {
     return q;
   }
 
   @Override
-  public String toString () {
-    return "{"+p+","+q+"}";
+  public String toString() {
+    return "{" + p + "," + q + "}";
+  }
+
+  // Given an Iterable<Pair<P,Q>> - returns an Iterable<Q>.
+  public static <P, Q> Iterable<Q> iq(final Iterable<Pair<P, Q>> it) {
+    final Iterator<Pair<P, Q>> i = it.iterator();
+    
+    return Iterables.in(new Iterator<Q> () {
+      
+      @Override
+      public boolean hasNext() {
+        return i.hasNext();
+      }
+
+      @Override
+      public Q next() {
+        return i.next().getQ();
+      }
+
+      @Override
+      public void remove() {
+        i.remove();
+      }
+    });
+  }
+
+  // Given an Iterable<Pair<P,Q>> - returns an Iterable<P>.
+  public static <P, Q> Iterable<P> ip(Iterable<Pair<P, Q>> it) {
+    final Iterator<Pair<P, Q>> i = it.iterator();
+    
+    return Iterables.in(new Iterator<P> () {
+      
+      @Override
+      public boolean hasNext() {
+        return i.hasNext();
+      }
+
+      @Override
+      public P next() {
+        return i.next().getP();
+      }
+
+      @Override
+      public void remove() {
+        i.remove();
+      }
+    });
   }
 }
