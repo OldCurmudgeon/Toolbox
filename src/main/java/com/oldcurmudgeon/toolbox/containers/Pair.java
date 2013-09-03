@@ -16,8 +16,6 @@
 package com.oldcurmudgeon.toolbox.containers;
 
 import com.oldcurmudgeon.toolbox.walkers.Iterables;
-import java.math.BigInteger;
-import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
