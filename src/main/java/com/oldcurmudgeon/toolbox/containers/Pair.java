@@ -24,7 +24,6 @@ import java.util.Iterator;
  * @author OldCurmudgeon
  */
 public class Pair<P, Q> {
-
   public final P p;
   public final Q q;
 
@@ -46,49 +45,49 @@ public class Pair<P, Q> {
     return "{" + p + "," + q + "}";
   }
 
+  // Iterate across Pairs - returns items of type T.
+  private abstract static class I<P, Q, T> implements Iterator<T> {
+    protected final Iterator<Pair<P, Q>> i;
+
+    public I(Iterator<Pair<P, Q>> i) {
+      this.i = i;
+    }
+
+    @Override
+    public boolean hasNext() {
+      return i.hasNext();
+    }
+
+    @Override
+    public void remove() {
+      i.remove();
+    }
+
+    @Override
+    public abstract T next();
+
+  }
+
   // Given an Iterable<Pair<P,Q>> - returns an Iterable<Q>.
   public static <P, Q> Iterable<Q> iq(final Iterable<Pair<P, Q>> it) {
-    final Iterator<Pair<P, Q>> i = it.iterator();
-    
-    return Iterables.in(new Iterator<Q> () {
-      
-      @Override
-      public boolean hasNext() {
-        return i.hasNext();
-      }
-
+    return Iterables.in(new I<P, Q, Q>(it.iterator()) {
       @Override
       public Q next() {
         return i.next().getQ();
       }
 
-      @Override
-      public void remove() {
-        i.remove();
-      }
     });
   }
 
   // Given an Iterable<Pair<P,Q>> - returns an Iterable<P>.
   public static <P, Q> Iterable<P> ip(Iterable<Pair<P, Q>> it) {
-    final Iterator<Pair<P, Q>> i = it.iterator();
-    
-    return Iterables.in(new Iterator<P> () {
-      
-      @Override
-      public boolean hasNext() {
-        return i.hasNext();
-      }
-
+    return Iterables.in(new I<P, Q, P>(it.iterator()) {
       @Override
       public P next() {
         return i.next().getP();
       }
 
-      @Override
-      public void remove() {
-        i.remove();
-      }
     });
   }
+
 }
