@@ -61,9 +61,6 @@ public class Pair<P, Q> {
       i.remove();
     }
 
-    @Override
-    public abstract T next();
-
   }
 
   // Given an Iterable<Pair<P,Q>> - returns an Iterable<Q>.
