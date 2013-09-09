@@ -27,7 +27,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicMarkableReference;
 
 /**
- *
+ * Allows a producer to append to the list while the consumer can pull the 
+ * whole current list for processing.
+ * 
  * @author caswellp
  */
 public class DoubleBufferedList<T> {
@@ -40,7 +42,7 @@ public class DoubleBufferedList<T> {
     return new ArrayList<>();
   }
 
-  // Get and replace the current list.
+  // Get and replace with empty the current list - can return null - does not mean failed.
   public List<T> get() {
     // Atomically grab and replace the list with an empty one.
     List<T> empty = newList();
