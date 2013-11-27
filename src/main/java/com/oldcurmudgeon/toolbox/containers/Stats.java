@@ -15,7 +15,6 @@
  */
 package com.oldcurmudgeon.toolbox.containers;
 
-import com.oldcurmudgeon.toolbox.Objects;
 import com.oldcurmudgeon.toolbox.walkers.Separator;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -37,8 +36,8 @@ public class Stats {
   // A single statistic.
 
   public static class Stat<T> {
-    protected T value;
     protected final String name;
+    protected T value;
 
     public Stat(String name) {
       this(name, null);

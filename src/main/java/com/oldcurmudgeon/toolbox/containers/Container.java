@@ -64,6 +64,7 @@ import java.util.concurrent.locks.LockSupport;
  * Adding (with my tests) is now very close to O(1) too.
  *
  * @author OldCurmudgeon
+ * @param <T>
  */
 public class Container<T> implements Iterable<T> {
   // The maximum capacity of the container.
@@ -171,34 +172,59 @@ public class Container<T> implements Iterable<T> {
     signalFree();
   }
 
-  // Wait for a time when it is likely that a free slot is available.
-  /*
-   * Problem is, if I get to the end of the ring having found no slots I then wend my way down here and
-   * add me to the queue, meanwhile someone removes an entry! Result: I am waiting and there's a free slot 
-   * and no-one knows I am waiting.
-   * 
-   * ToDo: properly handle this scenario.
-   * 
-   * NB: The isFull check does not fix the issue, it merely postpones it. If an item gets removed between
-   * the call to isFull and the add to waiting we may end up waiting for ever.
-   * 
+  /**
+   * Queue of blocked writers.
+   */
+  private static class BlockedQueue {
+    private final AtomicBoolean locked = new AtomicBoolean(false);
+    private final Queue<Thread> waiting = new ConcurrentLinkedQueue<>();
+
+    public void sleep() {
+      Thread me = Thread.currentThread();
+      // Put me in the queue.
+      waiting.add(me);
+      try {
+        // Block while not first in queue or cannot acquire lock
+        while (waiting.peek() != me || !locked.compareAndSet(false, true)) {
+          LockSupport.park(this);
+        }
+      } finally {
+        // Take me from the queue.
+        Thread removed;
+        while ((removed = waiting.remove()) != me) {
+          // Put it back! It wasn't me!
+          waiting.add(removed);
+        }
+      }
+    }
+
+    public void wakeup() {
+      // Unlock.
+      locked.set(false);
+      // Wake the first in the queue ... unpark does nothing with a null parameter.
+      LockSupport.unpark(waiting.peek());
+    }
+
+  }
+  // Use this to block for a while.
+  private final BlockedQueue block = new BlockedQueue();
+
+  /**
+   * Wait for a time when it is likely that a free slot is available.
    */
   private void waitForFree() {
-    // Who am I?
-    Thread me = Thread.currentThread();
     // Still full?
     while (isFull()) {
-      // Stick me in the waiting list.
-      waiting.add(me);
       // Park me 'till something is removed.
-      LockSupport.park();
+      block.sleep();
     }
   }
 
-  // A slot has been freed up. If anyone is waiting, let the next one know.
+  /**
+   * A slot has been freed up. If anyone is waiting, let the next one know.
+   */
   private void signalFree() {
-    // Wake the the first in the queue ... unpark does nothing with a null parameter.
-    LockSupport.unpark(waiting.poll());
+    block.wakeup();
   }
 
   // Counts how many there are currently in the container.
@@ -299,6 +325,7 @@ public class Container<T> implements Iterable<T> {
     public String toString() {
       return element != null ? element.toString() : "null";
     }
+
   }
 
   // Provides an iterator across all items in the container.
@@ -379,6 +406,7 @@ public class Container<T> implements Iterable<T> {
     public void remove() {
       throw new UnsupportedOperationException("Not supported.");
     }
+
   }
 
   @Override
@@ -425,8 +453,9 @@ public class Container<T> implements Iterable<T> {
     }
     return s.toString();
   }
+
   // ***** Following only needed for testing. *****
-  private static TinyLogger log = new TinyLogger("Container");
+  private static final TinyLogger log = new TinyLogger("Container");
   static volatile boolean testing = true;
   static AtomicInteger nTesters = new AtomicInteger();
 
@@ -439,8 +468,8 @@ public class Container<T> implements Iterable<T> {
 
     public Tester(Container<T> container, T name) {
       nTesters.incrementAndGet();
-      c = container;
       me = name;
+      c = container;
     }
 
     private void pause() {
@@ -471,6 +500,7 @@ public class Container<T> implements Iterable<T> {
       }
       nTesters.decrementAndGet();
     }
+
   }
   static final String[] strings = {
     "One", "Two", "Three", "Four", "Five",
@@ -553,6 +583,7 @@ public class Container<T> implements Iterable<T> {
     // Wait for the tests to complete.
     completeTests(c, 10);
 
+    /*
     // Heavyweight tests.
     testing = true;
     final int n = 100;
@@ -564,6 +595,7 @@ public class Container<T> implements Iterable<T> {
       t.start();
     }
     completeTests(d, 30);
+            */
   }
 
   static void completeTests(Container c, int seconds) throws InterruptedException {
@@ -581,4 +613,5 @@ public class Container<T> implements Iterable<T> {
     }
 
   }
+
 }

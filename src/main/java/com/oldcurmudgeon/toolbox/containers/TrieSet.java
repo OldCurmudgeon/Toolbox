@@ -25,6 +25,7 @@ import java.util.Set;
  * Implementation of a Trie Set of a CharSequence.
  *
  * @author OldCurmudgeon
+ * @param <K>
  */
 public class TrieSet<K extends CharSequence> extends AbstractSet<K> implements Set<K> {
   // Hold a TrieMap<Object> and always put v in it.

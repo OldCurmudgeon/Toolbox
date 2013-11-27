@@ -22,8 +22,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 /**
- *
- * @author caswellp
+ * @author OldCurmudgeon
  */
 public class JoinedArray<T> implements Iterable<T> {
   final List<T[]> joined;
@@ -142,6 +141,7 @@ public class JoinedArray<T> implements Iterable<T> {
   public static void main(String[] args) {
     JoinedArray<String> a = new JoinedArray<>(
             new String[]{
+              "Zero",
               "One"
             },
             new String[]{
@@ -160,8 +160,8 @@ public class JoinedArray<T> implements Iterable<T> {
       System.out.println(s);
     }
     String[] four = new String[4];
-    int copied = a.copyTo(four, 3, 4);
-    System.out.println("Copied " + copied + " = " + Arrays.toString(four));
+    int copied = a.copyTo(four, 3, four.length);
+    System.out.println("Copied (3,"+four.length+")=" + copied + " = " + Arrays.toString(four));
 
   }
 }

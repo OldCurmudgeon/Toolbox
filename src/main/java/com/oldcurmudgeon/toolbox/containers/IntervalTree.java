@@ -24,6 +24,7 @@ import java.util.Random;
 
 /**
  * @author OldCurmudgeon
+ * @param <T>
  */
 public class IntervalTree<T extends IntervalTree.Interval> {
   // My intervals.
@@ -38,19 +39,6 @@ public class IntervalTree<T extends IntervalTree.Interval> {
   // My right tree. All intervals that start above my center.
   private final IntervalTree<T> right;
 
-  // Helper class while initialising to speed up the process.
-  private static class CenteredInterval<T extends IntervalTree.Interval> {
-    final T interval;
-    final long center;
-    
-    CenteredInterval(T interval) {
-      // Record the original interval.
-      this.interval = interval;
-      // Calculate the center just once.
-      center = (interval.getStart() + interval.getEnd()) / 2;
-    }
-  }
-  
   public IntervalTree(List<T> intervals) {
     if (intervals == null) {
       throw new NullPointerException();
@@ -73,14 +61,17 @@ public class IntervalTree<T extends IntervalTree.Interval> {
     // Rights contains all intervals that start above my center point.
     final List<T> rights = new ArrayList<>();
 
+    // Track my bounds while distributing.
     long uB = Long.MIN_VALUE;
     long lB = Long.MAX_VALUE;
     for (T i : intervals) {
       long start = i.getStart();
       long end = i.getEnd();
       if (end < center) {
+        // It ends below me - move it to my left.
         lefts.add(i);
       } else if (start > center) {
+        // It starts above me - move it to my right.
         rights.add(i);
       } else {
         // One of mine.
@@ -92,6 +83,7 @@ public class IntervalTree<T extends IntervalTree.Interval> {
     // Remove all those not mine.
     intervals.removeAll(lefts);
     intervals.removeAll(rights);
+    // Record my bounds.
     uBound = uB;
     lBound = lB;
 

@@ -41,10 +41,14 @@ import java.util.TreeMap;
  *
  * This implementation does NOT allow null as key or value.
  *
- * NB: The keys to the EntrySet are actually Strings disguised as K type. If this causes issues, use the 
+ * NB: The keys to the EntrySet are actually Strings disguised as K type. If this causes issues, use the
  * keyFactory constructor.
  *
  * @author OldCurmudgeon
+ *
+ * @param <K> - The type of the key - must implement `CharSequence`.
+ * @param <V> - The type of the value.
+ *
  */
 public class TrieMap<K extends CharSequence, V> extends AbstractMap<K, V> implements Map<K, V> {
 
@@ -58,21 +62,21 @@ public class TrieMap<K extends CharSequence, V> extends AbstractMap<K, V> implem
    *
    */
   private Map<Character, TrieMap<K, V>> children = null;
-  // Here we store the map contents at this node of the tree. A null value means there is no value here.
+  // Store the map contents at this node of the tree. A null value means there is no value here.
   private V value = null;
   // My key factory for the EntrySet keys. Defaults to a String key.
   private final KeyFactory<K> keyFactory;
-  
+
   // Message for null.
   private static final String NoNullsPlease = "A Trie cannot hold nulls!";
   // Message for type failure.
   private static final String KeyIsCharSequencePlease = "Key must be a CharSequence!";
-  
+
   // Without keyFactory constructor - defaults to String keys.
   public TrieMap() {
     this.keyFactory = StringKeyFactory;
   }
-  
+
   // With keyFactory constructor.
   public TrieMap(KeyFactory keyFactory) {
     this.keyFactory = keyFactory;
@@ -156,19 +160,6 @@ public class TrieMap<K extends CharSequence, V> extends AbstractMap<K, V> implem
    * Add a new value to the map.
    *
    * Time footprint = O(s.length).
-   *
-   * @param s
-   *
-   * The key defining the place to add.
-   *
-   * @param value
-   *
-   * The value to add there.
-   *
-   * @return
-   *
-   * The value that was there, or null if it wasn't.
-   *
    */
   @Override
   public V put(K key, V value) {
@@ -181,13 +172,8 @@ public class TrieMap<K extends CharSequence, V> extends AbstractMap<K, V> implem
   /**
    * Gets the value at the specified key position.
    *
-   * @param o
+   * @param k - The key to use.
    *
-   * The key to the location.
-   *
-   * @return
-   *
-   * The value at that location, or null if there is no value at that location.
    */
   @Override
   public V get(Object k) {
@@ -212,13 +198,7 @@ public class TrieMap<K extends CharSequence, V> extends AbstractMap<K, V> implem
   /**
    * Remove the value at the specified location.
    *
-   * @param o
-   *
-   * The key to the location.
-   *
-   * @return
-   *
-   * The value that was removed, or null if there was no value at that location.
+   * @param k - The key to use.
    */
   @Override
   public V remove(Object k) {
@@ -243,10 +223,6 @@ public class TrieMap<K extends CharSequence, V> extends AbstractMap<K, V> implem
 
   /**
    * Count the number of values in the structure.
-   *
-   * @return
-   *
-   * The number of values in the structure.
    */
   @Override
   public int size() {
@@ -254,7 +230,7 @@ public class TrieMap<K extends CharSequence, V> extends AbstractMap<K, V> implem
     int size = value != null ? 1 : 0;
     if (children != null) {
       // Add sizes of all my children.
-      for (Map.Entry<Character, TrieMap<K,V>> e : children.entrySet()) {
+      for (Map.Entry<Character, TrieMap<K, V>> e : children.entrySet()) {
         size += e.getValue().size();
       }
     }
@@ -263,10 +239,6 @@ public class TrieMap<K extends CharSequence, V> extends AbstractMap<K, V> implem
 
   /**
    * Is the tree empty?
-   *
-   * @return
-   *
-   * true if the tree is empty. false if there is still at least one value in the tree.
    */
   @Override
   public boolean isEmpty() {
@@ -275,14 +247,10 @@ public class TrieMap<K extends CharSequence, V> extends AbstractMap<K, V> implem
     return value == null && (children == null || children.isEmpty());
   }
 
-  // From here on we are really only implementimg Map
+  // From here on we are really only implementimg Map as efficiently as we can.
+  
   /**
    * Returns all keys as a Set.
-   *
-   * @return
-   *
-   * A TrieSet of this.
-   *
    */
   @Override
   public Set<K> keySet() {
@@ -293,13 +261,7 @@ public class TrieMap<K extends CharSequence, V> extends AbstractMap<K, V> implem
   /**
    * Does the map contain the specified key.
    *
-   * @param key
-   *
-   * The key to look for.
-   *
-   * @return
-   *
-   * true if the key is in the Map. false if not.
+   * @param o - The key to lookup.
    */
   @Override
   public boolean containsKey(Object o) {
@@ -328,10 +290,6 @@ public class TrieMap<K extends CharSequence, V> extends AbstractMap<K, V> implem
 
   /**
    * Return a list of key/value pairs.
-   *
-   * @return
-   *
-   * The entry set.
    */
   @Override
   public Set<Map.Entry<K, V>> entrySet() {
@@ -342,8 +300,6 @@ public class TrieMap<K extends CharSequence, V> extends AbstractMap<K, V> implem
    * Check v must not be null.
    *
    * Throws exception or returns.
-   *
-   * @param v
    */
   private static void ensureNotNull(Object... v) {
     // Protect against adding nulls.
@@ -355,9 +311,7 @@ public class TrieMap<K extends CharSequence, V> extends AbstractMap<K, V> implem
   }
 
   // Package private because TrieSet uses this class.
-  static class EntrySet<K extends CharSequence, V> 
-  extends AbstractSet<Map.Entry<K, V>> 
-  implements Set<Map.Entry<K, V>> {
+  static class EntrySet<K extends CharSequence, V> extends AbstractSet<Map.Entry<K, V>> implements Set<Map.Entry<K, V>> {
     // The map.
     final TrieMap<K, V> map;
 
@@ -383,7 +337,7 @@ public class TrieMap<K extends CharSequence, V> extends AbstractMap<K, V> implem
       private Entry<K, V> next = null;
       // The key factory.
       final KeyFactory<K> keyFactory;
-      
+
       // The current state of the iteration.
       private static class State<K extends CharSequence, V> {
         // The key to the current head TrieMap.
@@ -410,6 +364,7 @@ public class TrieMap<K extends CharSequence, V> extends AbstractMap<K, V> implem
           this.map = map;
           this.parent = parent;
         }
+
       }
 
       private EnrySetIterator(State<K, V> parent, CharSequence head, TrieMap<K, V> map) {
@@ -481,6 +436,7 @@ public class TrieMap<K extends CharSequence, V> extends AbstractMap<K, V> implem
         // Remove the empty string entry from the current map 'cause that's us.
         state.map.remove(keyFactory.toK(""));
       }
+
     }
   }
 
@@ -491,8 +447,8 @@ public class TrieMap<K extends CharSequence, V> extends AbstractMap<K, V> implem
    *
    * The type of the value.
    */
-  private static class Entry<K extends CharSequence, V> 
-  implements Map.Entry<K, V> {
+  private static class Entry<K extends CharSequence, V>
+          implements Map.Entry<K, V> {
     private final K key;
     private final TrieMap<K, V> map;
 
@@ -538,12 +494,14 @@ public class TrieMap<K extends CharSequence, V> extends AbstractMap<K, V> implem
     public String toString() {
       return key + "=" + map.value;
     }
+
   }
 
   // Key factories.
   public interface KeyFactory<K extends CharSequence> {
     // Make a key from this sequence.
     public K toK(CharSequence c);
+
   }
 
   public static class StringKeyFactory implements KeyFactory<String> {
@@ -551,6 +509,7 @@ public class TrieMap<K extends CharSequence, V> extends AbstractMap<K, V> implem
     public String toK(CharSequence c) {
       return c.toString();
     }
+
   }
   // They are all idempotent so we can pre-build them.
   public static final KeyFactory StringKeyFactory = new StringKeyFactory();
@@ -560,6 +519,7 @@ public class TrieMap<K extends CharSequence, V> extends AbstractMap<K, V> implem
     public StringBuilder toK(CharSequence c) {
       return new StringBuilder(c);
     }
+
   }
   // They are all idempotent so we can pre-build them.
   public static final KeyFactory StringBuilderKeyFactory = new StringBuilderKeyFactory();
@@ -569,6 +529,7 @@ public class TrieMap<K extends CharSequence, V> extends AbstractMap<K, V> implem
     public StringBuffer toK(CharSequence c) {
       return new StringBuffer(c);
     }
+
   }
   // They are all idempotent so we can pre-build them.
   public static final KeyFactory StringBufferKeyFactory = new StringBufferKeyFactory();
@@ -576,9 +537,11 @@ public class TrieMap<K extends CharSequence, V> extends AbstractMap<K, V> implem
   public static <V> Map<String, V> newStringMap() {
     return new TrieMap<>(StringKeyFactory);
   }
+
   public static <V> Map<StringBuilder, V> newStringBuilderMap() {
     return new TrieMap<>(StringBuilderKeyFactory);
   }
+
   public static <V> Map<StringBuffer, V> newStringBufferMap() {
     return new TrieMap<>(StringBufferKeyFactory);
   }
@@ -602,10 +565,10 @@ public class TrieMap<K extends CharSequence, V> extends AbstractMap<K, V> implem
       };
       for (String s : tests) {
         String added = t.put(s, s);
-        System.out.println("Added '" + s + 
-                "'\tResult: " + added + 
-                "\tSize: " + t.size() + 
-                "\tContains: " + t.containsKey(s));
+        System.out.println("Added '" + s
+                + "'\tResult: " + added
+                + "\tSize: " + t.size()
+                + "\tContains: " + t.containsKey(s));
       }
       System.out.println("Trie: " + t);
       System.out.println("Removing: " + "0123456789");
@@ -640,19 +603,19 @@ public class TrieMap<K extends CharSequence, V> extends AbstractMap<K, V> implem
 
       t.clear();
       System.out.println("Clear: " + t);
-
       Map<StringBuilder, StringBuilder> m = TrieMap.<StringBuilder>newStringBuilderMap();
       m.put(new StringBuilder(""), new StringBuilder(""));
       m.put(new StringBuilder("0"), new StringBuilder("0"));
       m.put(new StringBuilder("01"), new StringBuilder("01"));
       m.put(new StringBuilder("012"), new StringBuilder("012"));
       System.out.println("Entries: " + m.entrySet());
-      for ( Map.Entry<StringBuilder,StringBuilder> e : m.entrySet() ) {
-        System.out.println(e.getKey().toString()+" key is a "+e.getKey().getClass().getSimpleName());
-        System.out.println(e.getValue().toString()+" value is a "+e.getKey().getClass().getSimpleName());
+      for (Map.Entry<StringBuilder, StringBuilder> e : m.entrySet()) {
+        System.out.println(e.getKey().toString() + " key is a " + e.getKey().getClass().getSimpleName());
+        System.out.println(e.getValue().toString() + " value is a " + e.getKey().getClass().getSimpleName());
       }
     } catch (Throwable ex) {
       ex.printStackTrace();
     }
   }
+
 }

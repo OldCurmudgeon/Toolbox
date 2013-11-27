@@ -76,6 +76,7 @@ import java.util.TreeSet;
  * adding to a MapFilder results in additions to the Map.
  *
  * @author OldCurmudgeon
+ * @param <T>
  */
 public class MapFilter<T> implements Map<String, T> {
   // The enclosed map -- could also be a MapFilter.
@@ -127,7 +128,7 @@ public class MapFilter<T> implements Map<String, T> {
   public MapFilter(Properties p, String prefix) {
     // Properties extends HashTable<Object,Object> so it implements Map.
     // I need Map<String,T> so I wrap it in a HashMap for simplicity.
-    this(new HashMap<String, T>((Map) p), prefix);
+    this(new HashMap<>((Map) p), prefix);
   }
 
   // Helper to fast filter the map.
@@ -315,8 +316,8 @@ public class MapFilter<T> implements Map<String, T> {
   // Simple tests.
   public static void main(String[] args) {
     String[] samples = {
-      "Some.String.For.Me",
-      "Some.String.For.You",
+      "Some.For.Me",
+      "Some.For.You",
       "Some.More",
       "Yet.More"};
     Map map = new HashMap();
@@ -325,9 +326,9 @@ public class MapFilter<T> implements Map<String, T> {
     }
     Map all = new MapFilter(map);
     Map some = new MapFilter(map, "Some.");
-    Map someString = new MapFilter(some, "String.");
+    Map someFor = new MapFilter(some, "For.");
     System.out.println("All: " + all);
     System.out.println("Some: " + some);
-    System.out.println("Some.String: " + someString);
+    System.out.println("Some.For: " + someFor);
   }
 }
