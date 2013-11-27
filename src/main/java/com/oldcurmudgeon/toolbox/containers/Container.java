@@ -172,60 +172,60 @@ public class Container<T> implements Iterable<T> {
     signalFree();
   }
 
-  /**
-   * Queue of blocked writers.
-   */
-  private static class BlockedQueue {
-    private final AtomicBoolean locked = new AtomicBoolean(false);
-    private final Queue<Thread> waiting = new ConcurrentLinkedQueue<>();
+    /**
+     * Queue of blocked writers.
+     */
+    private static class BlockedQueue {
+      private final AtomicBoolean blocked = new AtomicBoolean(false);
+      private final Queue<Thread> waiting = new ConcurrentLinkedQueue<>();
 
-    public void sleep() {
-      Thread me = Thread.currentThread();
-      // Put me in the queue.
-      waiting.add(me);
-      try {
-        // Block while not first in queue or cannot acquire lock
-        while (waiting.peek() != me || !locked.compareAndSet(false, true)) {
-          LockSupport.park(this);
+      public void sleep() {
+        Thread me = Thread.currentThread();
+        // Put me in the queue.
+        waiting.add(me);
+        try {
+          // Block while not first in queue or we're blocked
+          while (waiting.peek() != me || !blocked.compareAndSet(false, true)) {
+            LockSupport.park(this);
+          }
+        } finally {
+          // Take me from the queue.
+          Thread removed;
+          while ((removed = waiting.remove()) != me) {
+            // Put it back! It wasn't me!
+            waiting.add(removed);
+          }
         }
-      } finally {
-        // Take me from the queue.
-        Thread removed;
-        while ((removed = waiting.remove()) != me) {
-          // Put it back! It wasn't me!
-          waiting.add(removed);
-        }
+      }
+
+      public void wakeup() {
+        // Unlock.
+        blocked.set(false);
+        // Wake the first in the queue ... unpark does nothing with a null parameter.
+        LockSupport.unpark(waiting.peek());
+      }
+
+    }
+    // Use this to block for a while.
+    private final BlockedQueue block = new BlockedQueue();
+
+    /**
+     * Wait for a time when it is likely that a free slot is available.
+     */
+    private void waitForFree() {
+      // Still full?
+      while (isFull()) {
+        // Park me 'till something is removed.
+        block.sleep();
       }
     }
 
-    public void wakeup() {
-      // Unlock.
-      locked.set(false);
-      // Wake the first in the queue ... unpark does nothing with a null parameter.
-      LockSupport.unpark(waiting.peek());
+    /**
+     * A slot has been freed up. If anyone is waiting, let the next one know.
+     */
+    private void signalFree() {
+      block.wakeup();
     }
-
-  }
-  // Use this to block for a while.
-  private final BlockedQueue block = new BlockedQueue();
-
-  /**
-   * Wait for a time when it is likely that a free slot is available.
-   */
-  private void waitForFree() {
-    // Still full?
-    while (isFull()) {
-      // Park me 'till something is removed.
-      block.sleep();
-    }
-  }
-
-  /**
-   * A slot has been freed up. If anyone is waiting, let the next one know.
-   */
-  private void signalFree() {
-    block.wakeup();
-  }
 
   // Counts how many there are currently in the container.
   public int size() {
