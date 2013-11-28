@@ -25,7 +25,6 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
-import java.util.concurrent.locks.LockSupport;
 
 /**
  * Container
@@ -124,7 +123,7 @@ public class Container<T> implements Iterable<T> {
   }
 
   // Add a new one - block if no room.
-  public Node<T> put(T element) {
+  public Node<T> put(T element) throws InterruptedException {
     do {
       // Get a free node.
       Node<T> freeNode = getFree();
@@ -172,60 +171,26 @@ public class Container<T> implements Iterable<T> {
     signalFree();
   }
 
-    /**
-     * Queue of blocked writers.
-     */
-    private static class BlockedQueue {
-      private final AtomicBoolean blocked = new AtomicBoolean(false);
-      private final Queue<Thread> waiting = new ConcurrentLinkedQueue<>();
+  // Use this to block for a while.
+  private final Blocked block = new Blocked();
 
-      public void sleep() {
-        Thread me = Thread.currentThread();
-        // Put me in the queue.
-        waiting.add(me);
-        try {
-          // Block while not first in queue or we're blocked
-          while (waiting.peek() != me || !blocked.compareAndSet(false, true)) {
-            LockSupport.park(this);
-          }
-        } finally {
-          // Take me from the queue.
-          Thread removed;
-          while ((removed = waiting.remove()) != me) {
-            // Put it back! It wasn't me!
-            waiting.add(removed);
-          }
-        }
-      }
-
-      public void wakeup() {
-        // Unlock.
-        blocked.set(false);
-        // Wake the first in the queue ... unpark does nothing with a null parameter.
-        LockSupport.unpark(waiting.peek());
-      }
-
+  /**
+   * Wait for a time when it is likely that a free slot is available.
+   */
+  private void waitForFree() throws InterruptedException {
+    // Still full?
+    while (isFull()) {
+      // Park me 'till something is removed.
+      block.await();
     }
-    // Use this to block for a while.
-    private final BlockedQueue block = new BlockedQueue();
+  }
 
-    /**
-     * Wait for a time when it is likely that a free slot is available.
-     */
-    private void waitForFree() {
-      // Still full?
-      while (isFull()) {
-        // Park me 'till something is removed.
-        block.sleep();
-      }
-    }
-
-    /**
-     * A slot has been freed up. If anyone is waiting, let the next one know.
-     */
-    private void signalFree() {
-      block.wakeup();
-    }
+  /**
+   * A slot has been freed up. If anyone is waiting, let the next one know.
+   */
+  private void signalFree() {
+    block.release();
+  }
 
   // Counts how many there are currently in the container.
   public int size() {
@@ -584,18 +549,18 @@ public class Container<T> implements Iterable<T> {
     completeTests(c, 10);
 
     /*
-    // Heavyweight tests.
-    testing = true;
-    final int n = 100;
-    Container<Integer> d = new Container<>(n);
-    for (int i = 0; i < 10 * n; i++) {
-      Thread t = new Thread(new Tester<>(d, i));
-      t.setName("Tester " + i);
-      log.log("Starting " + t.getName());
-      t.start();
-    }
-    completeTests(d, 30);
-            */
+     // Heavyweight tests.
+     testing = true;
+     final int n = 100;
+     Container<Integer> d = new Container<>(n);
+     for (int i = 0; i < 10 * n; i++) {
+     Thread t = new Thread(new Tester<>(d, i));
+     t.setName("Tester " + i);
+     log.log("Starting " + t.getName());
+     t.start();
+     }
+     completeTests(d, 30);
+     */
   }
 
   static void completeTests(Container c, int seconds) throws InterruptedException {
