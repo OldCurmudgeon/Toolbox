@@ -17,9 +17,12 @@ package com.oldcurmudgeon.toolbox.containers;
 
 import com.oldcurmudgeon.toolbox.walkers.Iterables;
 import java.util.Iterator;
+import java.util.Objects;
 
 /**
  * @author OldCurmudgeon
+ * @param <P>
+ * @param <Q>
  */
 public class Pair<P, Q> {
   public final P p;
@@ -41,6 +44,26 @@ public class Pair<P, Q> {
   @Override
   public String toString() {
     return "{" + p + "," + q + "}";
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (o == null) {
+      return false;
+    }
+    if (!(o instanceof Pair)) {
+      return false;
+    }
+    Pair<P, Q> it = (Pair<P, Q>) o;
+    return p.equals(it.p) && q.equals(it.q);
+  }
+
+  @Override
+  public int hashCode() {
+    int hash = 7;
+    hash = 79 * hash + Objects.hashCode(p);
+    hash = 79 * hash + Objects.hashCode(q);
+    return hash;
   }
 
   // Iterate across Pairs - returns items of type T.
