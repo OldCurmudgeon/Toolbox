@@ -128,7 +128,8 @@ public class MapFilter<T> implements Map<String, T> {
   public MapFilter(Properties p, String prefix) {
     // Properties extends HashTable<Object,Object> so it implements Map.
     // I need Map<String,T> so I wrap it in a HashMap for simplicity.
-    this(new HashMap<>((Map) p), prefix);
+    // Java-8 breaks if we use diamond inference.
+    this(new HashMap<String,T>((Map) p), prefix);
   }
 
   // Helper to fast filter the map.
