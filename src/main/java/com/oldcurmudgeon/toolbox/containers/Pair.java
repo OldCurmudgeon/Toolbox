@@ -17,7 +17,6 @@ package com.oldcurmudgeon.toolbox.containers;
 
 import com.oldcurmudgeon.toolbox.walkers.Iterables;
 import java.util.Iterator;
-import java.util.Objects;
 
 /**
  * @author OldCurmudgeon

@@ -30,6 +30,10 @@ public class Iterables {
    *
    * If {@link Iterable#iterator()} is invoked more than once, an
    * {@link IllegalStateException} is thrown.
+   *
+   * @param <T>
+   * @param i
+   * @return
    */
   public static <T> java.lang.Iterable<T> in(final Iterator<T> i) {
     assert i != null;
@@ -214,12 +218,12 @@ public class Iterables {
         diff = 1;
       }
     }
-    if (diff == 0) {
+    if (diff == 0 && i2.hasNext()) {
       // i1 exhausted! i2 is less!
       diff = -1;
     }
     // All the same!
-    return 0;
+    return diff;
   }
 
 }
