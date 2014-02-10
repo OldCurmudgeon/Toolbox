@@ -15,9 +15,12 @@
  */
 package com.oldcurmudgeon.toolbox.walkers;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -25,8 +28,13 @@ import java.util.Set;
  * @author OldCurmudgeon
  */
 public class Iterables {
+
+  private Iterables() {
+  }
+
   /**
-   * Adapts an {@link Iterator} to an {@link Iterable} for use in enhanced for loops.
+   * Adapts an {@link Iterator} to an {@link Iterable} for use in enhanced for
+   * loops.
    *
    * If {@link Iterable#iterator()} is invoked more than once, an
    * {@link IllegalStateException} is thrown.
@@ -35,94 +43,206 @@ public class Iterables {
    * @param i
    * @return
    */
-  public static <T> java.lang.Iterable<T> in(final Iterator<T> i) {
-    assert i != null;
-    class SingleUseIterable implements java.lang.Iterable<T> {
-      private boolean used = false;
-
-      @Override
-      public Iterator<T> iterator() {
-        if (used) {
-          throw new IllegalStateException("SingleUseIterable already invoked");
-        }
-        used = true;
-        return i;
-      }
-
-    }
-    return new SingleUseIterable();
+  public static <T> Iterable<T> in(final Iterator<T> i) {
+    return new SingleUseIterable<>(i);
   }
 
-  public static <T> java.lang.Iterable<T> in(final Enumeration<T> e) {
-    assert e != null;
-    class SingleUseIterable implements java.lang.Iterable<T> {
-      private boolean used = false;
-
-      @Override
-      public Iterator<T> iterator() {
-        if (used) {
-          throw new IllegalStateException("SingleUseIterable already invoked");
-        }
-        used = true;
-        return new Iterator<T>() {
-          @Override
-          public boolean hasNext() {
-            return e.hasMoreElements();
-          }
-
-          @Override
-          public T next() {
-            return e.nextElement();
-          }
-
-          @Override
-          public void remove() {
-            throw new UnsupportedOperationException("Not supported.");
-          }
-
-        };
-      }
-
-    }
-    return new SingleUseIterable();
+  /**
+   * Makes an Enumeration iterable.
+   *
+   * @param <T>
+   * @param e
+   * @return
+   */
+  public static <T> Iterable<T> in(final Enumeration<T> e) {
+    return new SingleUseIterable<>(new EnumerationIterator<>(e));
   }
 
-  // Iterable across any set of objects calling their toString.
-  public static java.lang.Iterable<String> in(final Set<? extends Object> s) {
-    assert s != null;
-    final Iterator<? extends Object> i = s.iterator();
+  /**
+   * Makes an Iterable<String> out of an Iterable<Object> by calling toString on
+   * each object.
+   *
+   * @param i
+   * @return
+   */
+  public static Iterable<String> in(final Iterable<Object> i) {
+    return in(new IA<Object, String>(i.iterator(), objectToString));
+  }
 
-    class SingleUseIterable implements java.lang.Iterable<String> {
-      private boolean used = false;
+  /**
+   * Adapts Objects to Strings.
+   */
+  public static final Adapter<Object, String> objectToString = new Adapter<Object, String>() {
 
-      @Override
-      public Iterator<String> iterator() {
-        if (used) {
-          throw new IllegalStateException("SingleUseIterable already invoked");
-        }
-        used = true;
-        return new Iterator<String>() {
-          @Override
-          public boolean hasNext() {
-            return i.hasNext();
-          }
-
-          @Override
-          public String next() {
-            return i.next().toString();
-          }
-
-          @Override
-          public void remove() {
-            throw new UnsupportedOperationException("Not supported.");
-          }
-
-        };
-      }
-
+    public String adapt(Object p) {
+      return p.toString();
     }
-    return new SingleUseIterable();
 
+  };
+
+  /**
+   * Makes sure the iterator is never used again - even though it is wrapped in
+   * an Iterable.
+   *
+   * @param <T>
+   */
+  public static class SingleUseIterable<T> implements Iterable<T> {
+
+    protected boolean used = false;
+    protected final Iterator<T> it;
+
+    public SingleUseIterable(Iterator<T> it) {
+      this.it = it;
+    }
+
+    public SingleUseIterable(Iterable<T> it) {
+      this(it.iterator());
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+      if (used) {
+        throw new IllegalStateException("SingleUseIterable already invoked");
+      }
+      used = true;
+      // Only let them have it once.
+      return it;
+    }
+
+  }
+
+  /**
+   * A classic adaptor pattern.
+   *
+   * @param <P>
+   * @param <Q>
+   */
+  public static interface Adapter<P, Q> {
+
+    public Q adapt(P p);
+
+  }
+
+  /**
+   * An I walks an iterator of one type but delivers items of a different type.
+   *
+   * Please fill in the `next()` method. Use an Adaptor for convenience.
+   *
+   * @param <S>
+   * @param <T>
+   */
+  public abstract static class I<S, T> implements Iterator<T> {
+
+    protected final Iterator<S> it;
+
+    public I(Iterator<S> it) {
+      this.it = it;
+    }
+
+    @Override
+    public boolean hasNext() {
+      return it.hasNext();
+    }
+
+    @Override
+    public void remove() {
+      it.remove();
+    }
+
+  }
+
+  /**
+   * Use an adaptor to transform one type into another.
+   *
+   * @param <S>
+   * @param <T>
+   */
+  public static class IA<S, T> extends I<S, T> {
+
+    private final Adapter<S, T> adaptor;
+
+    public IA(Iterator<S> it, Adapter<S, T> adaptor) {
+      super(it);
+      this.adaptor = adaptor;
+    }
+
+    @Override
+    public T next() {
+      return adaptor.adapt(it.next());
+    }
+
+  }
+
+  /**
+   * An Iterator over an Enumeration.
+   *
+   * @param <T>
+   */
+  public static class EnumerationIterator<T> implements Iterator<T> {
+
+    private final Enumeration<T> it;
+
+    public EnumerationIterator(Enumeration<T> it) {
+      this.it = it;
+    }
+
+    @Override
+    public boolean hasNext() {
+      return it.hasMoreElements();
+    }
+
+    @Override
+    public T next() {
+      return it.nextElement();
+    }
+
+    @Override
+    public void remove() {
+      throw new UnsupportedOperationException("Not supported.");
+    }
+
+  }
+
+  // Empty iterable - Deprecated! - Please use Collections.<T>emptyList();
+  @Deprecated
+  public static <T> Iterable<T> emptyIterable() {
+    return Collections.<T>emptyList();
+  }
+
+  // Empty iterator - Deprecated! - Please use Collections.<T>emptyIterator();
+  @Deprecated
+  public static <T> Iterator<T> emptyIterator() {
+    return Collections.<T>emptyList().iterator();
+  }
+
+  public abstract static class Walker<T> implements Iterator<T> {
+
+    // The next item.
+    private T next = get();
+
+    // Get the next.
+    abstract T get();
+
+    @Override
+    public final boolean hasNext() {
+      if (next == null) {
+        next = get();
+      }
+      return next != null;
+    }
+
+    @Override
+    public final T next() {
+      // Standard - give it and null it.
+      T n = next;
+      next = null;
+      return n;
+    }
+
+    @Override
+    public void remove() {
+      throw new UnsupportedOperationException("Not supported.");
+    }
   }
 
   // Unique iterable.
@@ -136,39 +256,34 @@ public class Iterables {
     };
   }
 
-  private static class UniqueIterator<T> implements Iterator<T> {
+  private static class UniqueIterator<T> extends Walker<T> {
+
     // The feed iterator.
     private final Iterator<T> i;
     // Check for duplicates.
     private final Set<T> done = new HashSet<>();
-    // Next
-    private T next = null;
 
     public UniqueIterator(Iterator<T> i) {
       this.i = i;
     }
 
     @Override
-    public boolean hasNext() {
+    T get() {
+      T next = null;
       while (next == null && i.hasNext()) {
         T n = i.next();
-        // Already done that one?
-        if (!done.contains(n)) {
-          // Done it now.
-          done.add(n);
-          next = n;
+        if (n != null) {
+          // Already done that one?
+          if (!done.contains(n)) {
+            // Done it now.
+            done.add(n);
+            // Pick that one.
+            next = n;
+          }
         }
 
       }
-      return next != null;
-    }
-
-    @Override
-    public T next() {
-      // Standard - gove it and null it.
-      T n = next;
-      next = null;
-      return n;
+      return next;
     }
 
     @Override
@@ -179,32 +294,14 @@ public class Iterables {
 
   }
 
-  // Empty iterable.
-  public static <T> java.lang.Iterable<T> emptyIterable() {
-    return in(Iterables.<T>emptyIterator());
-  }
-
-  // Empty iterator.
-  public static <T> java.util.Iterator<T> emptyIterator() {
-    return new Iterator<T>() {
-      @Override
-      public boolean hasNext() {
-        return false;
-      }
-
-      @Override
-      public T next() {
-        return null;
-      }
-
-      @Override
-      public void remove() {
-        throw new UnsupportedOperationException("Not supported.");
-      }
-
-    };
-  }
-
+  /**
+   * Compare two iterators for equality.
+   *
+   * @param <T>
+   * @param i1
+   * @param i2
+   * @return
+   */
   public static <T extends Comparable<T>> int compare(Iterator<T> i1, Iterator<T> i2) {
     int diff = 0;
     while (i1.hasNext() && diff == 0) {
@@ -223,7 +320,75 @@ public class Iterables {
       diff = -1;
     }
     // All the same!
-    return diff;
+    return 0;
+  }
+
+  /**
+   * Makes a number of Iterables iterable.
+   *
+   * @param <T>
+   * @param them
+   * @return
+   */
+  public static <T> Iterable<T> in(final Iterable<T>... them) {
+    return new Iterable<T>() {
+      // Counter across them.
+      private int i = 0;
+      // The Iterator on the current one.
+      private Iterator<T> it = nextIterator();
+
+      public Iterator<T> iterator() {
+        return new Walker<T>() {
+
+          @Override
+          T get() {
+            T next = null;
+            // It is exhausted?
+            if (!it.hasNext()) {
+              // Get the next iterator.
+              it = nextIterator();
+            }
+            if (it != null && it.hasNext()) {
+              // Pull next out.
+              next = it.next();
+            }
+            return next;
+          }
+
+          public void remove() {
+            it.remove();
+          }
+
+        };
+      }
+
+      private Iterator<T> nextIterator() {
+        if (them == null || i >= them.length) {
+          return null;
+        }
+        Iterator<T> n = null;
+        do {
+          Iterable<T> next = them[i++];
+          if ( next != null ) {
+            n = next.iterator();
+          }
+        } while (i < them.length && (n == null || !n.hasNext()));
+        return n;
+      }
+
+    };
+  }
+
+  public static void main(String args[]) {
+    try {
+      List<String> a = Arrays.asList("One", "Two", "Three");
+      List<String> b = Arrays.asList("Four", "Five", "Six");
+      for (String s : in(a, null, Collections.<String>emptyList(), b)) {
+        System.out.println(s);
+      }
+    } catch (Throwable t) {
+      t.printStackTrace(System.err);
+    }
   }
 
 }

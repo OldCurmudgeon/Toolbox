@@ -57,7 +57,7 @@ public class Fields<Column extends Enum<Column> & Table.Columns> {
 
       // Build the column names map.
       columnNames = new HashMap<>();
-      Set<Column> allColumns = EnumSet.allOf(sampleCol.getClass());
+      Set<Column> allColumns = EnumSet.allOf(sampleCol.getDeclaringClass());
       // Fill it.
       for (Column c : allColumns) {
          columnNames.put(c.name(), c);
@@ -78,7 +78,7 @@ public class Fields<Column extends Enum<Column> & Table.Columns> {
       fields.clear();
 
       // Start the changed set empty.
-      changed = EnumSet.noneOf(sampleCol.getClass());
+      changed = EnumSet.noneOf(sampleCol.getDeclaringClass());
    }
 
    /**

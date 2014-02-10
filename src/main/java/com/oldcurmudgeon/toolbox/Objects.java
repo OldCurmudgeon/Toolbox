@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.oldcurmudgeon.toolbox;
 
 import java.util.Arrays;
@@ -24,17 +23,18 @@ import java.util.Arrays;
 public class Objects {
 
   // Also in Rebox.
+  // Call without a second parameter to get an array of the specified type with the specified length.
   public static <T> T[] newArray(int length, T... empty) {
     return Arrays.copyOfRange(empty, 0, length);
   }
-  
+
   public static void main(String[] args) {
     String[] strings = Objects.<String>newArray(5);
     System.out.println(Arrays.asList(strings));
   }
-  
+
   public static String asString(Object o, String dflt) {
     return o != null ? o.toString() : dflt;
   }
-  
+
 }
