@@ -15,8 +15,8 @@
  */
 package com.oldcurmudgeon.toolbox.containers;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutionException;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -27,77 +27,67 @@ import java.util.stream.Stream;
  */
 public class Enums {
 
-    public interface HasName {
+  public interface HasName {
 
-        public String name();
+    public String name();
+
+  }
+
+  public interface PoliteEnum extends HasName {
+
+    default String politeName() {
+      return name().replace("_", " ");
     }
 
-    public interface PoliteEnum extends HasName {
+  }
 
-        default String politeName() {
-            return name().replace("_", " ");
-        }
-    }
+  public interface Lookup<P, Q> {
 
-    public interface Lookup<P, Q> {
+    public Q lookup(P p) throws Exception;
 
-        public Q lookup(P p) throws Exception;
-    }
+  }
 
     public interface ReverseLookup<E extends Enum<E>> extends Lookup<String, E> {
 
-        // Map of all classes that have lookups.
-        Multiton<Class, Map<String, Enum>> lookups = new Multiton<>(
-                new Multiton.Creator<Class, Map<String, Enum>>() {
+      // Map of all classes that have lookups.
+      Map<Class, Map<String, Enum>> lookups = new ConcurrentHashMap<>();
 
-                    @Override
-                    Map<String, Enum> create(Class key) throws ExecutionException {
-                        return new HashMap<>();
-                    }
+      // What I need from the Enum.
+      Class<E> getDeclaringClass();
 
-                });
-        //Map<Class, Map<String, Enum>> lookups = new HashMap<>();
+      @Override
+      default E lookup(String name) throws InterruptedException, ExecutionException {
+        // What class.
+        Class<E> c = getDeclaringClass();
+        // Get the map - make a new one of not present.
+        final Map<String, Enum> lookup = lookups.computeIfAbsent(c, k -> 
+                  Stream.of(c.getEnumConstants())
+                  // Roll each enum into the lookup.
+                  .collect(Collectors.toMap(Enum::name, Function.identity())));
+        // Look it up.
+        return c.cast(lookup.get(name));
+      }
 
-        // What I need from the Enum.
-        Class<E> getDeclaringClass();
-
-        @Override
-        default E lookup(String name) throws InterruptedException, ExecutionException {
-            // What class.
-            Class<E> c = getDeclaringClass();
-            // Get the map.
-            final Map<String, Enum> lookup = lookups.get(c) != null
-                    ? lookups.get(c)
-                    : new HashMap<>();
-            if (lookup.isEmpty()) {
-                // Populate it.
-                Stream.of(c.getEnumConstants())
-                        // Roll each enum into the lookup.
-                        .collect(Collectors.toMap(Enum::name, Function.identity()));
-            }
-            // Look it up.
-            return c.cast(lookup.get(name));
-        }
     }
 
-    // Use the above interfaces to add to the enum.
-    public enum X implements PoliteEnum, ReverseLookup<X> {
+  // Use the above interfaces to add to the enum.
+  public enum X implements PoliteEnum, ReverseLookup<X> {
 
-        A_For_Ism,
-        B_For_Mutton,
-        C_Forth_Highlanders;
-    }
+    A_For_Ism,
+    B_For_Mutton,
+    C_Forth_Highlanders;
+  }
 
-    public void test() {
-        System.out.println("Hello");
-    }
+  public void test() {
+    System.out.println("Hello");
+  }
 
-    public static void main(String args[]) {
-        try {
-            new Enums().test();
-        } catch (Throwable t) {
-            t.printStackTrace(System.err);
-        }
+  public static void main(String args[]) {
+    try {
+      new Enums().test();
+    } catch (Throwable t) {
+      t.printStackTrace(System.err);
     }
+  }
 
 }
