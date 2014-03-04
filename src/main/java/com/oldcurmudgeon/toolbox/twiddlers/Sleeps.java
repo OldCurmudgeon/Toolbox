@@ -29,19 +29,20 @@ import java.util.Map;
  * <p>Copyright: Copyright (c) 2009</p>
  *
  * @author OldCurmudgeon
+ * @param <S>
  */
-public class Sleeps<Sleeper extends Enum<Sleeper> & Sleeps.Sleeper> {
+public class Sleeps<S extends Enum<S> & Sleeps.Sleeper> {
   // My sleepers.
-  final EnumSet<Sleeper> sleepers;
+  final EnumSet<S> sleepers;
   // The surrogates that actually do the sleeping.
-  final Map<Sleeper, Surrogate<Sleeper>> surrogates;
+  final Map<S, Surrogate<S>> surrogates;
 
-  private void sleep(Sleeper sleeper) {
+  private void sleep(S sleeper) {
     // Forward it to the surrogate.
     surrogates.get(sleeper).sleep();
   }
 
-  private void doze(Sleeper sleeper) throws InterruptedException {
+  private void doze(S sleeper) throws InterruptedException {
     // Forward it to the surrogate.
     surrogates.get(sleeper).doze();
   }
@@ -59,7 +60,7 @@ public class Sleeps<Sleeper extends Enum<Sleeper> & Sleeps.Sleeper> {
   }
 
   // Constructor grabs the enum of sleepers.
-  public Sleeps(EnumSet<Sleeper> sleepers) {
+  public Sleeps(EnumSet<S> sleepers) {
     // Grab my sleepers.
     this.sleepers = sleepers;
 
@@ -83,7 +84,7 @@ public class Sleeps<Sleeper extends Enum<Sleeper> & Sleeps.Sleeper> {
     surrogates.clear();
 
     // Create all the surrogates.
-    for (Sleeper s : sleepers) {
+    for (S s : sleepers) {
       surrogates.put(s, new Surrogate<>(s));
     }
   }
@@ -99,7 +100,7 @@ public class Sleeps<Sleeper extends Enum<Sleeper> & Sleeps.Sleeper> {
   }
 
   // Surrogate sleeper - actually does the sleeping.
-  private static class Surrogate<Sleeper extends Enum<Sleeper> & Sleeps.Sleeper> {
+  private static class Surrogate<S extends Enum<S> & Sleeps.Sleeper> {
     // Default value for a reset.
     private final long originalMilliseconds;
     // Current value in case we want to escalate.
@@ -174,11 +175,11 @@ public class Sleeps<Sleeper extends Enum<Sleeper> & Sleeps.Sleeper> {
 
   // Collect times from params.
   public void setTimesFromParams(Params params) throws NumberFormatException {
-    for (Sleeper s : sleepers) {
+    for (S s : sleepers) {
       String paramName = "Sleep" + s;
       String param = params.get(paramName, null);
       if (param != null) {
-        Surrogate surrogate = surrogates.get(s);
+        Surrogate<S> surrogate = surrogates.get(s);
         Double newTime = Double.parseDouble(param);
         surrogate.setTime(newTime);
       }
@@ -188,7 +189,7 @@ public class Sleeps<Sleeper extends Enum<Sleeper> & Sleeps.Sleeper> {
   // Back to default settings.
   public void reset() {
     // Reset all to original.
-    for (Surrogate s : surrogates.values()) {
+    for (Surrogate<S> s : surrogates.values()) {
       s.milliseconds = s.originalMilliseconds;
     }
   }
