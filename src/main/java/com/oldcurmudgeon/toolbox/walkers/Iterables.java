@@ -25,7 +25,8 @@ import nu.xom.Elements;
 import org.slf4j.LoggerFactory;
 
 /**
- *
+ * Tools for iterating.
+ * 
  * @author OldCurmudgeon
  */
 public final class Iterables {
@@ -58,9 +59,19 @@ public final class Iterables {
     return new SingleUseIterable<>(new ElementsIterator(e));
   }
 
+  /**
+   * Makes an Iterable<String> out of an Iterable<Object> by calling toString on
+   * each object.
+   *
+   * @param i
+   * @return
+   */
+  public static Iterable<String> in(final Iterable<Object> i) {
+    return in(new IA<Object, String>(i.iterator(), objectToString));
+  }
+  
   public static <P, Q> Iterable<Q> adapt(final Iterable<P> i, final Adapter<P, Q> adapter) {
     return () -> new IA<>(i.iterator(), adapter);
-
   }
 
   /**
@@ -68,7 +79,7 @@ public final class Iterables {
    *
    * @param <T>
    */
-  private static class ElementsIterator implements Iterator<Element> {
+  private static class ElementsIterator extends IN<Element> {
     final Elements elements;
     int i = 0;
     Element next = null;
@@ -78,25 +89,11 @@ public final class Iterables {
     }
 
     @Override
-    public boolean hasNext() {
-      if (next == null) {
-        if (i < elements.size()) {
-          next = elements.get(i++);
-        }
+    public Element getNext() {
+      if (i < elements.size()) {
+        return elements.get(i++);
       }
-      return next != null;
-    }
-
-    @Override
-    public Element next() {
-      Element e = next;
-      next = null;
-      return e;
-    }
-
-    @Override
-    public void remove() {
-      throw new UnsupportedOperationException("Cannot remove Element.");
+      return null;
     }
 
   }
@@ -160,21 +157,92 @@ public final class Iterables {
 
     @Override
     public void remove() {
-      throw new UnsupportedOperationException("Not supported yet.");
+      throw new UnsupportedOperationException("Not supported.");
     }
 
   }
-// Stringify an Object iterable.
 
   /**
-   * Makes an Iterable<String> out of an Iterable<Object> by calling toString on
-   * each object.
-   *
-   * @param i
-   * @return
+   * Walks each of the Iterables in turn.
+   * 
+   * @param <T>
+   * @param them
+   * @return 
    */
-  public static Iterable<String> in(final Iterable<Object> i) {
-    return in(new IA<Object, String>(i.iterator(), objectToString));
+  public static <T> Iterable<T> in(final Iterable<T>... them) {
+    return new Strider<>(them);
+  }
+
+  private static class Strider<T> implements Iterable<T> {
+    private final Iterable<T>[] them;
+
+    public Strider(final Iterable<T>... them) {
+      this.them = them;
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+      return new IterableIterator();
+    }
+
+    private class IterableIterator extends IN<T> {
+      private int i = 0;
+      private Iterator<T> it = null;
+
+      @Override
+      public T getNext() {
+        while ((it == null || !it.hasNext()) && i < them.length) {
+          it = them[i++].iterator();
+        }
+        if (it != null && it.hasNext()) {
+          return it.next();
+        }
+        return null;
+      }
+
+      @Override
+      public void remove() {
+        // Forward it.
+        it.remove();
+      }
+
+    }
+
+  }
+
+  /**
+   * An IN does next for you - thus formalising the Iterator contract.
+   *
+   * Just implement getNext.
+   *
+   * @param <T>
+   */
+  public abstract static class IN<T> implements Iterator<T> {
+
+    private T next = null;
+
+    abstract T getNext();
+
+    @Override
+    public final boolean hasNext() {
+      if (next == null) {
+        next = getNext();
+      }
+      return next != null;
+    }
+
+    @Override
+    public final T next() {
+      T n = next;
+      next = null;
+      return n;
+    }
+
+    @Override
+    public void remove() {
+      throw new UnsupportedOperationException("Not supported.");
+    }
+
   }
 
   /**
