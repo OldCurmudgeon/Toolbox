@@ -221,7 +221,7 @@ public class Rational extends Number implements Comparable<Rational> {
         if ( delta <= 0.0 ) {
             throw new IllegalArgumentException("Delta must be > 0.0");
         }
-        // Remove the integral part.
+        // Remove the sign and integral part.
         long integral = (long) Math.floor(dbl);
         dbl -= integral;
         // The value we are looking for.
