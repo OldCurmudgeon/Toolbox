@@ -224,15 +224,15 @@ public class Rational extends Number implements Comparable<Rational> {
         // Remove the integral part.
         long integral = (long) Math.floor(dbl);
         dbl -= integral;
-        // Start the fairey sequence.
-        Rational l = ZERO;
-        Rational h = ONE;
         // The value we are looking for.
-        Rational d = new Rational((long) ((dbl) / delta), (long) (1 / delta));
+        final Rational d = new Rational((long) ((dbl) / delta), (long) (1 / delta));
         // Min value = d - delta.
         final Rational min = new Rational((long) ((dbl - delta) / delta), (long) (1 / delta));
         // Max value = d + delta.
         final Rational max = new Rational((long) ((dbl + delta) / delta), (long) (1 / delta));
+        // Start the fairey sequence.
+        Rational l = ZERO;
+        Rational h = ONE;
         Rational found = null;
         // Keep slicing until we arrive within the delta range.
         do {
@@ -269,7 +269,7 @@ public class Rational extends Number implements Comparable<Rational> {
     }
 
     public BigDecimal toDecimal(int digits) {
-        return new BigDecimal(num).divide(new BigDecimal(den), digits, RoundingMode.DOWN);
+        return new BigDecimal(num).divide(new BigDecimal(den), digits, RoundingMode.DOWN).stripTrailingZeros();
     }
 
     @Override
