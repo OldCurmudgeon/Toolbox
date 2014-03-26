@@ -208,11 +208,15 @@ public class Rational extends Number implements Comparable<Rational> {
         return a.times(b.reciprocal());
     }
 
-// Default delta to apply.
+    // Default delta to apply.
     public static final double DELTA = 0.000001;
 
     public static Rational valueOf(double dbl) {
         return valueOf(dbl, DELTA);
+    }
+
+    public static Rational valueOf(BigDecimal dbl) {
+        return valueOf(dbl.doubleValue(), DELTA);
     }
 
     // Create a good rational for the value within the delta supplied.
