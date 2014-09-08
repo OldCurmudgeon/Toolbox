@@ -24,7 +24,9 @@ import java.util.Random;
 
 /**
  * @author OldCurmudgeon
- * @param <T>
+ * @param <T> - The type stored in the tree -
+ * must implement IntervalTree.Interval but beyond that you can do what you like.
+ * Probably store that value in there too.
  */
 public class IntervalTree<T extends IntervalTree.Interval> {
   // My intervals.
@@ -55,7 +57,6 @@ public class IntervalTree<T extends IntervalTree.Interval> {
      * Builds rights out of all intervals that start above my center.
      * What remains contains all the intervals that contain my center.
      */
-
     // Lefts contains all intervals that end below my center point.
     final List<T> lefts = new ArrayList<>();
     // Rights contains all intervals that start above my center point.
@@ -106,7 +107,7 @@ public class IntervalTree<T extends IntervalTree.Interval> {
       if (point <= uBound) {
         // In my range but remember, there may also be contributors from left or right.
         List<T> found = new ArrayList<>();
-        // Gather all intersecting ones.
+            // Gather all intersecting ones.
         // Could be made faster (perhaps) by holding two sorted lists by start and end.
         for (T i : intervals) {
           if (i.getStart() <= point && point <= i.getEnd()) {
@@ -158,6 +159,7 @@ public class IntervalTree<T extends IntervalTree.Interval> {
     public long getStart();
 
     public long getEnd();
+
   }
 
   /*
@@ -186,20 +188,22 @@ public class IntervalTree<T extends IntervalTree.Interval> {
     public String toString() {
       return "{" + start + "," + end + "}";
     }
+
   }
-  
+
   public static void main(String[] args) {
     // Make some test data.
     final int testEntries = 1 * 100;
     ArrayList<SimpleInterval> intervals = new ArrayList<>();
     Random random = new Random();
-    for ( int i = 0; i < testEntries; i++ ) {
+    for (int i = 0; i < testEntries; i++) {
       // Make a random interval.
       long start = random.nextLong();
       intervals.add(new SimpleInterval(start, start + 1000));
     }
     ProcessTimer timer = new ProcessTimer();
     IntervalTree<SimpleInterval> tree = new IntervalTree<>(intervals);
-    System.out.println("Took "+timer);
+    System.out.println("Took " + timer);
   }
+
 }

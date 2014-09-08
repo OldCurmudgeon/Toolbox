@@ -22,69 +22,95 @@ import java.util.concurrent.Future;
 import java.util.concurrent.FutureTask;
 
 /**
- * Holds a thread-safe map of unique create-once items.
+ * A Multiton where the keys are an enum and each key can create its own value.
  *
- * Contract:
+ * The create method of the key enum is guaranteed to only be called once.
  *
- * Only one object will be made for each key presented.
- *
- * Thread safe.
+ * Probably worth making your Multiton static to avoid duplication.
  *
  * @author OldCurmudgeon
- * @param <K>
- * @param <V>
+ * @param <K> - The enum that is the key in the map and also does the creation.
+ *
+ * No second parameter because it will probably not map to a single object.
  */
-public class Multiton<K, V> {
+public class Multiton<K extends Enum<K> & Multiton.Creator> {
+  // The map to the future.
+  private final ConcurrentMap<K, Future<Object>> multitons = new ConcurrentHashMap<>();
 
-    // Map from the key to the futures of the items.
-    private final ConcurrentMap<K, Future<V>> multitons = new ConcurrentHashMap<>();
-    // The creator can create an item of type V.
-    private final Creator<K, V> creator;
+  // The enums must create
+  public interface Creator {
+    public abstract Object create();
 
-    public Multiton(Creator<K, V> creator) {
-        this.creator = creator;
+  }
+
+  public <V> V get(final K key, Class<V> type) {
+    // Has it run yet?
+    Future<Object> f = multitons.get(key);
+    if (f == null) {
+      // No! Make the task that runs it.
+      FutureTask<Object> ft = new FutureTask<>(key::create);
+      // Only put if not there.
+      f = multitons.putIfAbsent(key, ft);
+      if (f == null) {
+        // We replaced null so we successfully put. We were first!
+        f = ft;
+        // Initiate the task.
+        ft.run();
+      }
     }
-
-    /**
-     * There can be only one.
-     *
-     * Use a FutureTask to do the creation to ensure only one construction.
-     *
-     * @param key
-     * @return
-     * @throws InterruptedException
-     * @throws ExecutionException
-     */
-    public V get(final K key) throws InterruptedException, ExecutionException {
-        // Already made?
-        Future<V> f = multitons.get(key);
-        if (f == null) {
-            // Plan the future but do not create as yet.
-            FutureTask<V> ft = new FutureTask<>(() -> creator.create(key));
-            // Store it.
-            f = multitons.putIfAbsent(key, ft);
-            if (f == null) {
-                // It was successfully stored - it is the first (and only)
-                f = ft;
-                // Make it happen.
-                ft.run();
-            }
-        }
-        // Wait for it to finish construction and return the constructed.
-        return f.get();
+    try {
+      /**
+       * If code gets here and hangs due to f.status = 0 (FutureTask.NEW)
+       * then you are trying to get from your Multiton in your creator.
+       *
+       * Cannot check for that without unnecessarily complex code.
+       *
+       * Perhaps could use get with timeout.
+       */
+      // Cast here to force the right type.
+      return (V) f.get();
+    } catch (InterruptedException | ExecutionException ex) {
+      // Hide exceptions without discarding them.
+      throw new RuntimeException(ex);
     }
+  }
 
-    /**
-     * User provides one of these to do the construction.
-     *
-     * @param <K>
-     * @param <V>
-     */
-    public abstract static class Creator<K, V> {
+  enum E implements Creator {
+    A {
 
-        // Return a new item under the key.
-        abstract V create(K key) throws ExecutionException;
+              @Override
+              public String create() {
+                return "Face";
+              }
 
+            },
+    B {
+
+              @Override
+              public Integer create() {
+                return 0xFace;
+              }
+
+            },
+    C {
+
+              @Override
+              public Void create() {
+                return null;
+              }
+
+            };
+  }
+
+  public static void main(String args[]) {
+    try {
+      Multiton<E> m = new Multiton<>();
+      String face1 = m.get(E.A, String.class);
+      Integer face2 = m.get(E.B, Integer.class);
+      System.out.println("Face1: " + face1 + " Face2: " + Integer.toHexString(face2));
+    } catch (Throwable t) {
+      t.printStackTrace(System.err);
     }
+  }
 
 }
