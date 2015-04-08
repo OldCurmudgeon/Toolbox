@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Tools for iterating.
- * 
+ *
  * @author OldCurmudgeon
  */
 public final class Iterables {
@@ -103,6 +103,59 @@ public final class Iterables {
 
   public static <P, Q> Iterable<Q> adapt(final Iterable<P> i, final Adapter<P, Q> adapter) {
     return () -> new IA<>(i.iterator(), adapter);
+
+  }
+
+  class IterableIterable<T> implements Iterable<T> {
+
+    private final Iterable<? extends Iterable<T>> i;
+
+    public IterableIterable(Iterable<? extends Iterable<T>> i) {
+      this.i = i;
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+      return new IIT();
+    }
+
+    private class IIT implements Iterator<T> {
+
+      // Pull an iterator.
+      final Iterator<? extends Iterable<T>> iit = i.iterator();
+      // The current Iterator<T>
+      Iterator<T> it = null;
+      // The current T.
+      T next = null;
+
+      @Override
+      public boolean hasNext() {
+        boolean finished = false;
+        while (next == null && !finished) {
+          if (it == null || !it.hasNext()) {
+            if (iit.hasNext()) {
+              it = iit.next().iterator();
+            } else {
+              // All over when we've exhausted the list of lists.
+              finished = true;
+            }
+          }
+          if (it != null && it.hasNext()) {
+            // Get another from the current list.
+            next = it.next();
+          }
+        }
+        return next != null;
+      }
+
+      @Override
+      public T next() {
+        T n = next;
+        next = null;
+        return n;
+      }
+
+    }
 
   }
 

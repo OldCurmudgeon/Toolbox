@@ -20,8 +20,8 @@ import java.util.Iterator;
 
 /**
  * @author OldCurmudgeon
- * @param <P>
- * @param <Q>
+ * @param <P> - The type of the first.
+ * @param <Q> - The type of the second.
  */
 public class Pair<P extends Comparable<P>, Q extends Comparable<Q>> implements Comparable<Pair<P, Q>> {
   // Exposing p & q directly for simplicity. They are final so this is safe.

@@ -107,7 +107,7 @@ public class IntervalTree<T extends IntervalTree.Interval> {
       if (point <= uBound) {
         // In my range but remember, there may also be contributors from left or right.
         List<T> found = new ArrayList<>();
-            // Gather all intersecting ones.
+        // Gather all intersecting ones.
         // Could be made faster (perhaps) by holding two sorted lists by start and end.
         for (T i : intervals) {
           if (i.getStart() <= point && point <= i.getEnd()) {

@@ -21,13 +21,17 @@ import java.util.Set;
 import java.util.TreeMap;
 
 /**
- * <p>Title: </p>
+ * <p>
+ * Title: </p>
  *
- * <p>Description: </p>
+ * <p>
+ * Description: </p>
  *
- * <p>Copyright: Copyright (c) 2006</p>
+ * <p>
+ * Copyright: Copyright (c) 2006</p>
  *
- * <p>Company: </p>
+ * <p>
+ * Company: </p>
  *
  * @author not attributable
  * @version 1.0
@@ -94,17 +98,18 @@ public final class Strings {
     int finalLen = (okToTruncate ? padLen : Math.max(padLen, stringLen));
     return (string + pad).substring(0, finalLen);
   }
+
   private static TreeMap<Integer, String> spaces = new TreeMap<>();
 
   public static String spaces(int n) {
-    Integer i = Integer.valueOf(n);
     String s = spaces.get(n);
     if (s == null) {
       s = makeFilledString(n, ' ');
-      spaces.put(i, s);
+      spaces.put(n, s);
     }
     return s;
   }
+
   private static TreeMap<Integer, String> zeros = new TreeMap<>();
 
   public static String zeros(int n) {
@@ -125,7 +130,7 @@ public final class Strings {
 
   public static String makeFilledString(int n, String s) {
     StringBuilder string = new StringBuilder(n * s.length());
-    for ( int i = 0; i < n; i++ ) {
+    for (int i = 0; i < n; i++) {
       string = string.append(s);
     }
     return string.toString();
@@ -172,6 +177,7 @@ public final class Strings {
     }
     return s;
   }
+
   public static final Set<Character> DIGITS = new HashSet<>(Arrays.asList('0', '1', '2', '3', '4', '5', '6', '7', '8', '9'));
   public static final Set<Character> UPPERCASE = new HashSet<>(Arrays.asList('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'));
   public static final Set<Character> LOWERCASE = new HashSet<>(Arrays.asList('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'));
@@ -180,23 +186,27 @@ public final class Strings {
       addAll(UPPERCASE);
       addAll(LOWERCASE);
     }
+
   };
   public static final Set<Character> ALPHANUMERIC = new HashSet<Character>() {
     {
       addAll(ALPHA);
       addAll(DIGITS);
     }
+
   };
   public static final Set<Character> INTEGER = new HashSet<Character>() {
     {
       addAll(DIGITS);
     }
+
   };
   public static final Set<Character> DECIMAL = new HashSet<Character>() {
     {
       addAll(DIGITS);
       add('.');
     }
+
   };
   public static final Set<Character> SIGNED_INTEGER = new HashSet<Character>() {
     {
@@ -204,12 +214,14 @@ public final class Strings {
       add('+');
       add('-');
     }
+
   };
   public static final Set<Character> SIGNED_DECIMAL = new HashSet<Character>() {
     {
       addAll(SIGNED_INTEGER);
       add('.');
     }
+
   };
 
   public static boolean allIn(String s, Set<Character> in) {
@@ -319,4 +331,5 @@ public final class Strings {
       }
     }
   }
+
 }

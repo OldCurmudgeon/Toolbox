@@ -55,7 +55,7 @@ public class JoinedArray<T> implements Iterable<T> {
 
     @Override
     public boolean hasNext() {
-      if (next == null) {
+      while (next == null && a != null) {
         // a goes to null at the end of i.
         if (a != null) {
           // End of a?
@@ -70,7 +70,9 @@ public class JoinedArray<T> implements Iterable<T> {
             ai = 0;
           }
           if (a != null) {
-            next = a[ai++];
+            if (ai < a.length) {
+              next = a[ai++];
+            }
           }
         }
       }
@@ -95,6 +97,7 @@ public class JoinedArray<T> implements Iterable<T> {
     public void remove() {
       throw new UnsupportedOperationException("Not supported.");
     }
+
   }
 
   public int copyTo(T[] to, int offset, int length) {
@@ -139,29 +142,42 @@ public class JoinedArray<T> implements Iterable<T> {
   }
 
   public static void main(String[] args) {
+    String[] zeroOne = new String[]{
+      "Zero",
+      "One"
+    };
+    String[] twoThreeFourFive = new String[]{
+      "Two",
+      "Three",
+      "Four",
+      "Five"
+    };
+    String[] sixSevenEightNine = new String[]{
+      "Six",
+      "Seven",
+      "Eight",
+      "Nine"
+    };
     JoinedArray<String> a = new JoinedArray<>(
-            new String[]{
-              "Zero",
-              "One"
-            },
-            new String[]{
-              "Two",
-              "Three",
-              "Four",
-              "Five"
-            },
-            new String[]{
-              "Six",
-              "Seven",
-              "Eight",
-              "Nine"
-            });
+            new String[]{},
+            new String[]{},
+            zeroOne,
+            new String[]{},
+            twoThreeFourFive,
+            sixSevenEightNine);
     for (String s : a) {
       System.out.println(s);
     }
+    twoThreeFourFive[0] = "TWO";
+    twoThreeFourFive[1] = null;
+    for (String s : a) {
+      System.out.println(s);
+    }
+
     String[] four = new String[4];
     int copied = a.copyTo(four, 3, four.length);
-    System.out.println("Copied (3,"+four.length+")=" + copied + " = " + Arrays.toString(four));
+    System.out.println("Copied (3," + four.length + ")=" + copied + " = " + Arrays.toString(four));
 
   }
+
 }
