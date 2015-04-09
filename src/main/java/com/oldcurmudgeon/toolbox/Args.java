@@ -89,7 +89,8 @@ public class Args<E extends Enum<E> & Enums.ReverseLookup<E>> {
               }
           }
         } else {
-          System.err.println("Arg '" + s + "' invalid or unrecognised.");
+          // Just ignore unexpected args.
+          //System.err.println("Arg '" + s + "' invalid or unrecognised.");
         }
 
       }
@@ -111,6 +112,28 @@ public class Args<E extends Enum<E> & Enums.ReverseLookup<E>> {
       state.add(State.Off);
     }
     return state;
+  }
+
+  /**
+   * Get all ons.
+   */
+  public Set<E> ons() {
+    return ons;
+  }
+
+  /**
+   * Get all offs.
+   */
+  public Set<E> offs() {
+    return offs;
+  }
+
+  /**
+   * Get the value behind this arg.
+   */
+  public String value(E e, String dflt) {
+    String v = values.get(e);
+    return v != null ? v : dflt;
   }
 
   public enum TestArgs implements Arg<TestArgs> {
