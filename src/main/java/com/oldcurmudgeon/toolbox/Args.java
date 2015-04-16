@@ -136,6 +136,20 @@ public class Args<E extends Enum<E> & Enums.ReverseLookup<E>> {
     return v != null ? v : dflt;
   }
 
+  /**
+   * Is this arg on?
+   */
+  public boolean on(E e) {
+    return ons.contains(e);
+  }
+
+  /**
+   * Is this arg off?
+   */
+  public boolean off(E e) {
+    return offs.contains(e);
+  }
+
   public enum TestArgs implements Arg<TestArgs> {
     Arg1, Arg2, Arg3, Arg4, Arg5;
   }

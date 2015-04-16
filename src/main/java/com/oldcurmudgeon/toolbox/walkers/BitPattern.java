@@ -34,19 +34,19 @@ public class BitPattern implements Iterable<BigInteger> {
   private final int bits;
   // Value to stop at. 2^max_bits.
   private final BigInteger stop;
-  // Should we invert the output.
-  private final boolean not;
 
   // All patterns of that many bits up to the specified number of bits - inverting if required.
-  public BitPattern(int bits, int max, boolean not) {
+  public BitPattern(int bits, int max) {
     this.bits = bits;
     this.stop = TWO.pow(max);
-    this.not = not;
   }
 
-  // All patterns of that many bits up to the specified number of bits.
-  public BitPattern(int bits, int max) {
-    this(bits, max, false);
+  /**
+   * Deprecated - please use NotPattern(BitPattern)
+   */
+  @Deprecated
+  public BitPattern(int bits, int max, boolean not) {
+    this(bits, max);
   }
 
   @Override
@@ -76,13 +76,13 @@ public class BitPattern implements Iterable<BigInteger> {
     @Override
     public boolean hasNext() {
       if (next == null) {
-          // Next one!
+        // Next one!
         // t gets v's least significant 0 bits set to 1
         // unsigned int t = v | (v - 1);
         BigInteger t = last.or(last.subtract(BigInteger.ONE));
         // Silly optimisation.
         BigInteger notT = t.not();
-          // Next set to 1 the most significant bit to change,
+        // Next set to 1 the most significant bit to change,
         // set to 0 the least significant ones, and add the necessary 1 bits.
         // w = (t + 1) | (((~t & -~t) - 1) >> (__builtin_ctz(v) + 1));
         // The __builtin_ctz(v) GNU C compiler intrinsic for x86 CPUs returns the number of trailing zeros.
@@ -99,7 +99,7 @@ public class BitPattern implements Iterable<BigInteger> {
     public BigInteger next() {
       last = hasNext() ? next : null;
       next = null;
-      return not ? last.not() : last;
+      return last;
     }
 
     @Override
