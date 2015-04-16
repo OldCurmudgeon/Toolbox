@@ -77,6 +77,10 @@ public class BitPattern implements Iterable<BigInteger> {
     public boolean hasNext() {
       if (next == null) {
         // Next one!
+        if (bits == 0) {
+          // A pattern containing 0 bits consists of a single 0.
+          return false;
+        }
         // t gets v's least significant 0 bits set to 1
         // unsigned int t = v | (v - 1);
         BigInteger t = last.or(last.subtract(BigInteger.ONE));
