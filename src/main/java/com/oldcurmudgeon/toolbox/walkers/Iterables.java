@@ -19,8 +19,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collections;
 import java.util.Enumeration;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.Set;
 import nu.xom.Element;
 import nu.xom.Elements;
 import org.slf4j.LoggerFactory;
@@ -31,6 +33,7 @@ import org.slf4j.LoggerFactory;
  * @author OldCurmudgeon
  */
 public final class Iterables {
+
   // Logger.
   private static final org.slf4j.Logger log = LoggerFactory.getLogger(Iterables.class);
 
@@ -41,8 +44,7 @@ public final class Iterables {
   /**
    * Adapts an {@link Iterator} to an {@link Iterable} for use in enhanced for loops.
    *
-   * If {@link Iterable#iterator()} is invoked more than once, an
-   * {@link IllegalStateException} is thrown.
+   * If {@link Iterable#iterator()} is invoked more than once, an {@link IllegalStateException} is thrown.
    *
    * @param <T>
    * @param i
@@ -65,6 +67,7 @@ public final class Iterables {
   }
 
   private static class Strider<T> implements Iterable<T> {
+
     private final Iterable<T>[] them;
 
     public Strider(final Iterable<T>... them) {
@@ -77,6 +80,7 @@ public final class Iterables {
     }
 
     private class IterableIterator extends IN<T> {
+
       private int i = 0;
       private Iterator<T> it = null;
 
@@ -165,6 +169,7 @@ public final class Iterables {
    * @param <T>
    */
   private static class ElementsIterator extends IN<Element> {
+
     final Elements elements;
     int i = 0;
     Element next = null;
@@ -209,6 +214,7 @@ public final class Iterables {
   }
 
   public static class ResultSetIterator extends IN<ResultSet> {
+
     private final ResultSet r;
 
     public ResultSetIterator(ResultSet r) {
@@ -223,8 +229,7 @@ public final class Iterables {
   }
 
   /**
-   * Makes an Iterable<String> out of an Iterable<Object> by calling toString on
-   * each object.
+   * Makes an Iterable<String> out of an Iterable<Object> by calling toString on each object.
    *
    * @param i
    * @return
@@ -244,11 +249,13 @@ public final class Iterables {
    * @param <T>
    */
   public static interface CloseableIterator<T> extends Iterator<T> {
+
     public void close();
 
   }
 
   public static interface CloseableIterable<T> extends Iterable<T> {
+
     @Override
     CloseableIterator<T> iterator();
 
@@ -363,8 +370,7 @@ public final class Iterables {
   }
 
   /**
-   * Makes sure the iterator is never used again - even though it is wrapped in
-   * an Iterable.
+   * Makes sure the iterator is never used again - even though it is wrapped in an Iterable.
    *
    * @param <T>
    */
@@ -401,6 +407,35 @@ public final class Iterables {
   // Empty iterator.
   public static <T> Iterator<T> emptyIterator() {
     return Collections.<T>emptyList().iterator();
+  }
+
+  public static <T> Iterable<T> unique(final Iterable<T> it) {
+    return () -> {
+
+      return new Iterator<T>() {
+        final Iterator<T> i = it.iterator();
+        final Set<T> seen = new HashSet<>();
+        T next = null;
+
+        @Override
+        public boolean hasNext() {
+          if (next == null && i.hasNext()) {
+            do {
+              next = i.hasNext() ? i.next() : null;
+            } while (next != null && seen.contains(next) && i.hasNext());
+          }
+          return next != null;
+        }
+
+        @Override
+        public T next() {
+          T n = next;
+          next = null;
+          return n;
+        }
+
+      };
+    };
   }
 
 }

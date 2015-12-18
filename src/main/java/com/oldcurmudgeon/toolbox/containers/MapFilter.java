@@ -120,8 +120,7 @@ public class MapFilter<T> implements Map<String, T> {
 
   @Override
   public String toString() {
-    StringBuilder s = new StringBuilder("MapFilter (" + prefix + ") of " + map + " containing ").append(entrySet());
-    return s.toString();
+    return "MapFilter(" + prefix + ") of " + map + " containing " + entrySet();
   }
 
   // Constructor from a properties file.
@@ -129,7 +128,7 @@ public class MapFilter<T> implements Map<String, T> {
     // Properties extends HashTable<Object,Object> so it implements Map.
     // I need Map<String,T> so I wrap it in a HashMap for simplicity.
     // Java-8 breaks if we use diamond inference.
-    this(new HashMap<String,T>((Map) p), prefix);
+    this(new HashMap<>((Map) p), prefix);
   }
 
   // Helper to fast filter the map.
@@ -224,7 +223,7 @@ public class MapFilter<T> implements Map<String, T> {
   // Clear everything out.
   @Override
   public void clear() {
-    // Just remove mine. 
+    // Just remove mine.
     // This does not clear the underlying map - perhaps it should remove the filtered entries.
     for (String key : entries.keySet()) {
       map.remove(prefix + key);
@@ -312,6 +311,7 @@ public class MapFilter<T> implements Map<String, T> {
     public int compareTo(Entry<T> o) {
       return getKey().compareTo(o.getKey());
     }
+
   }
 
   // Simple tests.
@@ -331,5 +331,14 @@ public class MapFilter<T> implements Map<String, T> {
     System.out.println("All: " + all);
     System.out.println("Some: " + some);
     System.out.println("Some.For: " + someFor);
+
+    Properties props = new Properties();
+    props.setProperty("namespace.prop1", "value1");
+    props.setProperty("namespace.prop2", "value2");
+    props.setProperty("namespace.iDontKnowThisNameAtCompileTime", "anothervalue");
+    props.setProperty("someStuff.morestuff", "stuff");
+    Map<String, String> filtered = new MapFilter(props, "namespace.");
+    System.out.println("namespace props " + filtered);
   }
+
 }
