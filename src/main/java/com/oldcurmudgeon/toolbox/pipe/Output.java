@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.oldcurmudgeon.test.pipe;
+package com.oldcurmudgeon.toolbox.pipe;
 
 /**
  *
@@ -11,5 +11,5 @@ package com.oldcurmudgeon.test.pipe;
  */
 public interface Output<T> {
 
-    public Pipe<T> put(T datum);
+  public Pipe<T> put(T datum);
 }

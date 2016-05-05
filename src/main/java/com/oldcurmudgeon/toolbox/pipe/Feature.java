@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.oldcurmudgeon.test.pipe;
+package com.oldcurmudgeon.toolbox.pipe;
 
 import java.util.Arrays;
 import java.util.EnumSet;
@@ -15,16 +15,16 @@ import java.util.Set;
  * @author pcaswell
  */
 public enum Feature {
-    // Perfect identical copy at both ends.
-    Mirror(Contract.NoDroppedPackets, Contract.InOrder);
-    private final Set<Contract> contracts;
+  // Perfect identical copy at both ends.
+  Mirror(Contract.NoDroppedPackets, Contract.InOrder);
+  private final Set<Contract> contracts;
 
-    Feature(Contract... contracts) {
-        this.contracts = EnumSet.copyOf(Arrays.asList(contracts));
-    }
+  Feature(Contract... contracts) {
+    this.contracts = EnumSet.copyOf(Arrays.asList(contracts));
+  }
 
-    public Set<Contract> getContracts() {
-        return contracts;
-    }
+  public Set<Contract> getContracts() {
+    return contracts;
+  }
 
 }
