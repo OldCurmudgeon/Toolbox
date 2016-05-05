@@ -30,58 +30,30 @@ import java.util.TreeSet;
  *
  * E.G.
  *
- * # The CardTypes table.
- * # Truncate table first (or leave it be)
- * Table.CardTypes.Truncate=false
- * # Update records (or only add)
- * Table.CardTypes.Update=false
- * # Fields in table
- * Table.CardTypes.Columns=Name,Type,PAN_Length,LUHN_Check,Range
- * Table.CardTypes.KeyColumn=Name
- * # NB: These are MSSql forms.
- * Table.CardTypes.Column.Name=varchar(40) NOT NULL
- * Table.CardTypes.Column.Type=varchar(10) NOT NULL
- * Table.CardTypes.Column.PAN_Length=bigint NOT NULL
- * Table.CardTypes.Column.LUHN_Check=bit NOT NULL
- * Table.CardTypes.Column.Range=varchar (20) NOT NULL
- * # Data.
- * Table.CardTypes.Record.01='Please Select ...','0',0,0,'-'
- * Table.CardTypes.Record.02='Wilko Gift Card','3',19,1,'98261711'
- * Table.CardTypes.Record.03='Wilko Saver Card','5',19,1,'9826171190'
+ * # The CardTypes table. # Truncate table first (or leave it be) Table.CardTypes.Truncate=false # Update records (or only add) Table.CardTypes.Update=false # Fields in table
+ * Table.CardTypes.Columns=Name,Type,PAN_Length,LUHN_Check,Range Table.CardTypes.KeyColumn=Name # NB: These are MSSql forms. Table.CardTypes.Column.Name=varchar(40) NOT NULL
+ * Table.CardTypes.Column.Type=varchar(10) NOT NULL Table.CardTypes.Column.PAN_Length=bigint NOT NULL Table.CardTypes.Column.LUHN_Check=bit NOT NULL Table.CardTypes.Column.Range=varchar (20) NOT NULL
+ * # Data. Table.CardTypes.Record.01='Please Select ...','0',0,0,'-' Table.CardTypes.Record.02='Wilko Gift Card','3',19,1,'98261711' Table.CardTypes.Record.03='Wilko Saver Card','5',19,1,'9826171190'
  * Table.CardTypes.Record.04='Selfridges Gift Card','2000',16,1,'98261'
  *
  * after filtering by "Table.CardTypes." becomes
  *
- * # The CardTypes table.
- * # Truncate table first (or leave it be)
- * Truncate=false
- * # Update records (or only add)
- * Update=false
- * # Fields in table
- * Columns=Name,Type,PAN_Length,LUHN_Check,Range
- * KeyColumn=Name
- * # NB: These are MSSql forms.
- * Column.Name=varchar(40) NOT NULL
- * Column.Type=varchar(10) NOT NULL
- * Column.PAN_Length=bigint NOT NULL
- * Column.LUHN_Check=bit NOT NULL
- * Column.Range=varchar (20) NOT NULL
- * # Data.
- * Record.01='Please Select ...','0',0,0,'-'
- * Record.02='Wilko Gift Card','3',19,1,'98261711'
- * Record.03='Wilko Saver Card','5',19,1,'9826171190'
- * Record.04='Selfridges Gift Card','2000',16,1,'98261'
+ * # The CardTypes table. # Truncate table first (or leave it be) Truncate=false # Update records (or only add) Update=false # Fields in table Columns=Name,Type,PAN_Length,LUHN_Check,Range
+ * KeyColumn=Name # NB: These are MSSql forms. Column.Name=varchar(40) NOT NULL Column.Type=varchar(10) NOT NULL Column.PAN_Length=bigint NOT NULL Column.LUHN_Check=bit NOT NULL Column.Range=varchar
+ * (20) NOT NULL # Data. Record.01='Please Select ...','0',0,0,'-' Record.02='Wilko Gift Card','3',19,1,'98261711' Record.03='Wilko Saver Card','5',19,1,'9826171190' Record.04='Selfridges Gift
+ * Card','2000',16,1,'98261'
  *
- * Note that all access through the filter reference the underlying Map so
- * adding to a MapFilder results in additions to the Map.
+ * Note that all access through the filter reference the underlying Map so adding to a MapFilder results in additions to the Map.
  *
  * @author OldCurmudgeon
  * @param <T>
  */
 public class MapFilter<T> implements Map<String, T> {
+
   // The enclosed map -- could also be a MapFilter.
+
   final private Map<String, T> map;
-  // Use a TreeMap for predictable iteration order.
+      // Use a TreeMap for predictable iteration order.
   // Store Map.Entry to reflect changes down into the underlying map.
   // The Key is the shortened string. The entry.key is the full string.
   final private Map<String, Map.Entry<String, T>> entries = new TreeMap<>();
@@ -125,7 +97,7 @@ public class MapFilter<T> implements Map<String, T> {
 
   // Constructor from a properties file.
   public MapFilter(Properties p, String prefix) {
-    // Properties extends HashTable<Object,Object> so it implements Map.
+        // Properties extends HashTable<Object,Object> so it implements Map.
     // I need Map<String,T> so I wrap it in a HashMap for simplicity.
     // Java-8 breaks if we use diamond inference.
     this(new HashMap<>((Map) p), prefix);
@@ -223,7 +195,7 @@ public class MapFilter<T> implements Map<String, T> {
   // Clear everything out.
   @Override
   public void clear() {
-    // Just remove mine.
+        // Just remove mine.
     // This does not clear the underlying map - perhaps it should remove the filtered entries.
     for (String key : entries.keySet()) {
       map.remove(prefix + key);
@@ -264,7 +236,9 @@ public class MapFilter<T> implements Map<String, T> {
    * The type of the value.
    */
   private static class Entry<T> implements Map.Entry<String, T>, Comparable<Entry<T>> {
+
     // Note that entry in the entry is an entry in the underlying map.
+
     private final Map.Entry<String, Map.Entry<String, T>> entry;
 
     Entry(Map.Entry<String, Map.Entry<String, T>> entry) {
