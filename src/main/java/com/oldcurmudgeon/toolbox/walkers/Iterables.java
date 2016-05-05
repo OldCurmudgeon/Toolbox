@@ -44,7 +44,8 @@ public final class Iterables {
   /**
    * Adapts an {@link Iterator} to an {@link Iterable} for use in enhanced for loops.
    *
-   * If {@link Iterable#iterator()} is invoked more than once, an {@link IllegalStateException} is thrown.
+   * If {@link Iterable#iterator()} is invoked more than once, an {@link IllegalStateException} is
+   * thrown.
    *
    * @param <T>
    * @param i
@@ -110,7 +111,7 @@ public final class Iterables {
 
   }
 
-  class IterableIterable<T> implements Iterable<T> {
+  public static class IterableIterable<T> implements Iterable<T> {
 
     private final Iterable<? extends Iterable<T>> i;
 

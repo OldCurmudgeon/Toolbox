@@ -13,7 +13,7 @@ import java.util.function.Supplier;
 /**
  * A Pipe is a source/sink of data.
  *
- * @author pcaswell
+ * @author OldCurmudgeon
  * @param <T>
  */
 public class Pipe<T> implements Input<T>, Output<T> {

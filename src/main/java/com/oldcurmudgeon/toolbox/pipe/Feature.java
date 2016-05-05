@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.oldcurmudgeon.toolbox.pipe;
 
 import java.util.Arrays;
@@ -12,7 +7,7 @@ import java.util.Set;
 /**
  * A Feature is a set of contracts.
  *
- * @author pcaswell
+ * @author OldCurmudgeon
  */
 public enum Feature {
   // Perfect identical copy at both ends.
