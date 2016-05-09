@@ -43,16 +43,20 @@ public class Pipe<T> implements Input<T>, Output<T> {
   /**
    * Simple pipe.
    */
-  private Pipe() {
+  public Pipe() {
   }
 
   /**
    * Special producer/consumer/functions set.
    */
-  private Pipe(Supplier<T> producer, Consumer<T> consumer, List<String> functions) {
+  private Pipe(Supplier<T> producer,
+          Consumer<T> consumer,
+          List<String> functions,
+          List<List<String>> otherFunctions) {
     this.producer = producer;
     this.consumer = consumer;
-    this.functions.addAll(functions);
+    this.previousFunctions.addAll(otherFunctions);
+    this.previousFunctions.add(functions);
   }
 
   /**
@@ -60,9 +64,9 @@ public class Pipe<T> implements Input<T>, Output<T> {
    *
    * @param pipe - The pipe to feed off.
    */
-  public Pipe(Pipe<T> pipe) {
+  private Pipe(Pipe<T> pipe) {
     // Chain from it. Close my consumer.
-    this(() -> pipe.get(), CLOSED, pipe.functions);
+    this(() -> pipe.get(), CLOSED, pipe.functions, pipe.previousFunctions);
   }
 
   /**
@@ -72,9 +76,9 @@ public class Pipe<T> implements Input<T>, Output<T> {
    * @param pipe - The pipe to feed off.
    * @param map - How to convert between
    */
-  public <S> Pipe(Pipe<S> pipe, Function<S, T> map) {
+  private <S> Pipe(Pipe<S> pipe, Function<S, T> map) {
     // Chain from it using the map. Close my consumer.
-    this(() -> map.apply(pipe.get()), CLOSED, pipe.functions);
+    this(() -> map.apply(pipe.get()), CLOSED, pipe.functions, pipe.previousFunctions);
   }
 
   /**
@@ -125,6 +129,8 @@ public class Pipe<T> implements Input<T>, Output<T> {
   /**
    * Join a new pipe on the end of me.
    *
+   * Used by `join` so private.
+   *
    * @param <U> - The new pipe type.
    * @param map
    * @return
@@ -134,7 +140,27 @@ public class Pipe<T> implements Input<T>, Output<T> {
     return new Pipe<>(this, map);
   }
 
+  /**
+   * Join a new pipe on the end of me.
+   *
+   * @return
+   */
   public Pipe<T> join() {
+    // Join directly to the old pipe.
+    return new Pipe<>(this);
+  }
+
+  /**
+   * Split the pipe.
+   *
+   * @return
+   */
+  public Pipe<T> split() {
+    // default to split into 2.
+    return split(2);
+  }
+
+  public Pipe<T> split(int howMany) {
     // Join directly to the old pipe.
     return new Pipe<>(this);
   }
@@ -142,16 +168,18 @@ public class Pipe<T> implements Input<T>, Output<T> {
   /**
    * Used by toString.
    *
-   * Tries to keep track of a descriptive name for me.
+   * Keep track of a descriptive name for me.
    *
    * Does not do very well ATM - changes to fed pipe is not reflected here.
    */
-  List<String> functions = new ArrayList();
+  private List<String> functions = new ArrayList();
+  private List<List<String>> previousFunctions = new ArrayList();
 
   @Override
   public String toString() {
-    // TODO: Build dynamically so changes up-stream pipes are reflected.
-    return "Pipe{" + functions + '}';
+    // Build dynamically so changes up-stream are reflected.
+    return (previousFunctions.isEmpty() ? "" : previousFunctions + " & ")
+            + (functions.isEmpty() ? "" : functions);
   }
 
   /**
@@ -215,14 +243,14 @@ public class Pipe<T> implements Input<T>, Output<T> {
     Pipe<Double> cbrt = new Pipe<Double>()
             // Cube root
             .addFunction(Math::cbrt, "cbrt");
-    // Joint it to stringify.
-    Pipe<String> strings = new Pipe<>(cbrt, (d) -> Double.toString(d))
+    // What does it look like?
+    cbrt.put(Math.PI);
+    System.out.println("Pipe: " + cbrt + " = " + cbrt.get());
+    // Join to a String pipe.
+    Pipe<String> strings = cbrt.join((d) -> Double.toString(d))
             .addFunction((s) -> s.replace('0', '1'), "0 -> 1")
             .addFunction((s) -> s.replace('1', '_'), "1 -> _")
             .addFunction((s) -> s.replace('.', '|'), ". -> |");
-    // Right now no buffering.
-    cbrt.put(Math.PI);
-    System.out.println("Pipe: " + cbrt + " raw    " + cbrt.get());
     // Pull out the result.
     cbrt.put(Math.PI);
     System.out.println("Pipe: " + strings + " joined " + strings.get());
