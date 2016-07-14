@@ -63,7 +63,7 @@ import java.util.concurrent.atomic.AtomicReference;
  * Adding (with my tests) is now very close to O(1) too.
  *
  * @author OldCurmudgeon
- * @param <T>
+ * @param <T> - The type of object in the container.
  */
 public class Container<T> implements Iterable<T> {
   // The maximum capacity of the container.
