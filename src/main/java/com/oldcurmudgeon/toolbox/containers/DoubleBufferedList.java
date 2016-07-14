@@ -30,7 +30,7 @@ import java.util.concurrent.atomic.AtomicMarkableReference;
  * Allows a producer to append to the list while the consumer can pull the 
  * whole current list for processing.
  * 
- * @author caswellp
+ * @author OldCurmudgeon
  */
 public class DoubleBufferedList<T> {
   // Atomic reference so I can atomically swap it through.
