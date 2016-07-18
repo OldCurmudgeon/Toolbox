@@ -92,16 +92,15 @@ public class IntervalTree<T extends IntervalTree.Interval> {
     left = lefts.size() > 0 ? new IntervalTree<>(lefts) : null;
     right = rights.size() > 0 ? new IntervalTree<>(rights) : null;
 
-    // Build my ascending and descending arrays.
-    /**
-     * @todo Build my ascending and descending arrays.
+    /*
+     * @todo: Build my ascending and descending arrays.
      */
   }
 
   /*
    * Returns a list of all intervals containing the point.
    */
-  List<T> query(long point) {
+  public List<T> query(long point) {
     // Check my range.
     if (point >= lBound) {
       if (point <= uBound) {
