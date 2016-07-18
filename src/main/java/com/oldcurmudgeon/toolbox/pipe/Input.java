@@ -7,5 +7,5 @@ package com.oldcurmudgeon.toolbox.pipe;
  */
 public interface Input<T> {
 
-  public T get();
+    public T get();
 }

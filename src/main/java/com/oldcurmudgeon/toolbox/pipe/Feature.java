@@ -10,16 +10,16 @@ import java.util.Set;
  * @author OldCurmudgeon
  */
 public enum Feature {
-  // Perfect identical copy at both ends.
-  Mirror(Contract.NoDroppedPackets, Contract.InOrder);
-  private final Set<Contract> contracts;
+    // Perfect identical copy at both ends.
+    Mirror(Contract.NoDroppedPackets, Contract.InOrder);
+    private final Set<Contract> contracts;
 
-  Feature(Contract... contracts) {
-    this.contracts = EnumSet.copyOf(Arrays.asList(contracts));
-  }
+    Feature(Contract... contracts) {
+        this.contracts = EnumSet.copyOf(Arrays.asList(contracts));
+    }
 
-  public Set<Contract> getContracts() {
-    return contracts;
-  }
+    public Set<Contract> getContracts() {
+        return contracts;
+    }
 
 }

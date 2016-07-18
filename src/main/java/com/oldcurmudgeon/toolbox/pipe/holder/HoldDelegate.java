@@ -16,42 +16,43 @@
 package com.oldcurmudgeon.toolbox.pipe.holder;
 
 import com.oldcurmudgeon.toolbox.pipe.Pipe;
+
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public class HoldDelegate<T> implements Holder<T> {
 
-  /**
-   * Pass it on.
-   */
-  private Consumer<T> consumer;
+    /**
+     * Pass it on.
+     */
+    private Consumer<T> consumer;
 
-  /**
-   * Pull it out.
-   */
-  private Supplier<T> producer;
+    /**
+     * Pull it out.
+     */
+    private Supplier<T> producer;
 
-  public HoldDelegate(Pipe<T> joinTo) {
-    // Delegate to the joined pipe.
-    consumer = joinTo::put;
-    producer = joinTo::get;
-  }
+    public HoldDelegate(Pipe<T> joinTo) {
+        // Delegate to the joined pipe.
+        consumer = joinTo::put;
+        producer = joinTo::get;
+    }
 
-  /**
-   * Delegate all.
-   */
-  @Override
-  public T get() {
-    return producer.get();
-  }
+    /**
+     * Delegate all.
+     */
+    @Override
+    public T get() {
+        return producer.get();
+    }
 
-  @Override
-  public void put(T it) {
-    consumer.accept(it);
-  }
+    @Override
+    public void put(T it) {
+        consumer.accept(it);
+    }
 
-  public static <T> Holder<T> make(Pipe<T> p) {
-    // Ignore the pipe.
-    return new HoldDelegate<>(p);
-  }
+    public static <T> Holder<T> make(Pipe<T> p) {
+        // Ignore the pipe.
+        return new HoldDelegate<>(p);
+    }
 }

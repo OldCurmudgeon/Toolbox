@@ -23,26 +23,26 @@ import java.util.Iterator;
  * @author OldCurmudgeon
  */
 public class OnceIterator<T> implements Iterator<T> {
-  final T[] ts;
-  int i = 0;
+    final T[] ts;
+    int i = 0;
 
-  public OnceIterator(T... ts) {
-    this.ts = ts;
-  }
+    public OnceIterator(T... ts) {
+        this.ts = ts;
+    }
 
-  @Override
-  public boolean hasNext() {
-    return i < ts.length;
-  }
+    @Override
+    public boolean hasNext() {
+        return i < ts.length;
+    }
 
-  @Override
-  public T next() {
-    return ts[i++];
-  }
+    @Override
+    public T next() {
+        return ts[i++];
+    }
 
-  @Override
-  public void remove() {
-    throw new UnsupportedOperationException("Not supported.");
-  }
+    @Override
+    public void remove() {
+        throw new UnsupportedOperationException("Not supported.");
+    }
 
 }

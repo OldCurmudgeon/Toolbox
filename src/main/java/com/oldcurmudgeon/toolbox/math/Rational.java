@@ -21,17 +21,17 @@ import java.math.RoundingMode;
 /**
  * ***********************************************************************
  * Compilation: javac Rational.java Execution: java Rational
- *
+ * <p>
  * Immutable ADT for Rational numbers.
- *
+ * <p>
  * Invariants ----------- - gcd(num, den) = 1, i.e, the rational number is in
  * reduced form - den >= 1, the denominator is always a positive integer - 0/1
  * is the unique representation of 0
- *
+ * <p>
  * We employ some tricks to stave of overflow, but if you need arbitrary
  * precision rationals, use BigRational.java.
- *
- ************************************************************************
+ * <p>
+ * ***********************************************************************
  */
 public class Rational extends Number implements Comparable<Rational> {
 
@@ -222,7 +222,7 @@ public class Rational extends Number implements Comparable<Rational> {
     // Create a good rational for the value within the delta supplied.
     public static Rational valueOf(double dbl, double delta) {
         // Primary checks.
-        if ( delta <= 0.0 ) {
+        if (delta <= 0.0) {
             throw new IllegalArgumentException("Delta must be > 0.0");
         }
         // Remove the sign and integral part.
@@ -266,7 +266,7 @@ public class Rational extends Number implements Comparable<Rational> {
         }
         // That's me.
         return found;
-    }    
+    }
 
     public BigDecimal toDecimal() {
         return toDecimal(4);
@@ -300,15 +300,16 @@ public class Rational extends Number implements Comparable<Rational> {
     private static void test3(double d) {
         test3(d, DELTA);
     }
+
     private static void test3(double d, double delta) {
         Rational r = valueOf(d, delta);
-        System.out.println("valueOf("+d+")"+"="+r+" - "+r.toDecimal());
+        System.out.println("valueOf(" + d + ")" + "=" + r + " - " + r.toDecimal());
     }
 
     private static void test2() {
         test3(-Math.PI);
         test3(0.100000001490116119384765625);
-        test3(1.0/3.0);
+        test3(1.0 / 3.0);
         test3(Math.PI);
         test3(Math.E);
         test3(Math.PI, 0.00000000001);

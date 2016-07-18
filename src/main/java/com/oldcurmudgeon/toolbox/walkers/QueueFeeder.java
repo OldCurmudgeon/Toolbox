@@ -24,25 +24,25 @@ import java.util.concurrent.BlockingQueue;
  * @author OldCurmudgeon
  */
 public class QueueFeeder<T> implements Runnable {
-  private final BlockingQueue<T> queue;
-  private final Iterator<T> iterator;
+    private final BlockingQueue<T> queue;
+    private final Iterator<T> iterator;
 
-  public QueueFeeder(BlockingQueue<T> queue, Iterator<T> iterator) {
-    this.queue = queue;
-    this.iterator = iterator;
-  }
-
-  @Override
-  public void run() {
-    try {
-      // While the iterator has a next, feed the queue.
-      while (iterator.hasNext()) {
-        // Just finish if we wre interrupted.
-        queue.put(iterator.next());
-      }
-    } catch (Exception e) {
-      System.out.println("Failed!!");
-      e.printStackTrace(System.out);
+    public QueueFeeder(BlockingQueue<T> queue, Iterator<T> iterator) {
+        this.queue = queue;
+        this.iterator = iterator;
     }
-  }
+
+    @Override
+    public void run() {
+        try {
+            // While the iterator has a next, feed the queue.
+            while (iterator.hasNext()) {
+                // Just finish if we wre interrupted.
+                queue.put(iterator.next());
+            }
+        } catch (Exception e) {
+            System.out.println("Failed!!");
+            e.printStackTrace(System.out);
+        }
+    }
 }

@@ -27,67 +27,67 @@ import java.util.stream.Stream;
  */
 public class Enums {
 
-  public interface HasName {
+    public interface HasName {
 
-    public String name();
+        public String name();
 
-  }
-
-  public interface PoliteEnum extends HasName {
-
-    default String politeName() {
-      return name().replace("_", " ");
     }
 
-  }
+    public interface PoliteEnum extends HasName {
 
-  public interface Lookup<P, Q> {
+        default String politeName() {
+            return name().replace("_", " ");
+        }
 
-    public Q lookup(P p) throws Exception;
+    }
 
-  }
+    public interface Lookup<P, Q> {
+
+        public Q lookup(P p) throws Exception;
+
+    }
 
     public interface ReverseLookup<E extends Enum<E>> extends Lookup<String, E> {
 
-      // Map of all classes that have lookups.
-      Map<Class, Map<String, Enum>> lookups = new ConcurrentHashMap<>();
+        // Map of all classes that have lookups.
+        Map<Class, Map<String, Enum>> lookups = new ConcurrentHashMap<>();
 
-      // What I need from the Enum.
-      Class<E> getDeclaringClass();
+        // What I need from the Enum.
+        Class<E> getDeclaringClass();
 
-      @Override
-      default E lookup(String name) throws InterruptedException, ExecutionException {
-        // What class.
-        Class<E> c = getDeclaringClass();
-        // Get the map - make a new one of not present.
-        final Map<String, Enum> lookup = lookups.computeIfAbsent(c, k -> 
-                  Stream.of(c.getEnumConstants())
-                  // Roll each enum into the lookup.
-                  .collect(Collectors.toMap(Enum::name, Function.identity())));
-        // Look it up.
-        return c.cast(lookup.get(name));
-      }
+        @Override
+        default E lookup(String name) throws InterruptedException, ExecutionException {
+            // What class.
+            Class<E> c = getDeclaringClass();
+            // Get the map - make a new one of not present.
+            final Map<String, Enum> lookup = lookups.computeIfAbsent(c, k ->
+                    Stream.of(c.getEnumConstants())
+                            // Roll each enum into the lookup.
+                            .collect(Collectors.toMap(Enum::name, Function.identity())));
+            // Look it up.
+            return c.cast(lookup.get(name));
+        }
 
     }
 
-  // Use the above interfaces to add to the enum.
-  public enum X implements PoliteEnum, ReverseLookup<X> {
+    // Use the above interfaces to add to the enum.
+    public enum X implements PoliteEnum, ReverseLookup<X> {
 
-    A_For_Ism,
-    B_For_Mutton,
-    C_Forth_Highlanders;
-  }
-
-  public void test() {
-    System.out.println("Hello");
-  }
-
-  public static void main(String args[]) {
-    try {
-      new Enums().test();
-    } catch (Throwable t) {
-      t.printStackTrace(System.err);
+        A_For_Ism,
+        B_For_Mutton,
+        C_Forth_Highlanders
     }
-  }
+
+    public void test() {
+        System.out.println("Hello");
+    }
+
+    public static void main(String args[]) {
+        try {
+            new Enums().test();
+        } catch (Throwable t) {
+            t.printStackTrace(System.err);
+        }
+    }
 
 }

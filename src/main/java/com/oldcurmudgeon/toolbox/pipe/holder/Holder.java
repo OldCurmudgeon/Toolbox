@@ -17,7 +17,7 @@ package com.oldcurmudgeon.toolbox.pipe.holder;
 
 public interface Holder<T> {
 
-  public T get();
+    public T get();
 
-  public void put(T it);
+    public void put(T it);
 }

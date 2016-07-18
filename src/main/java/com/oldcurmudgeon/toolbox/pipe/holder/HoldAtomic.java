@@ -16,40 +16,41 @@
 package com.oldcurmudgeon.toolbox.pipe.holder;
 
 import com.oldcurmudgeon.toolbox.pipe.Pipe;
+
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public class HoldAtomic<T> implements Holder<T> {
 
-  // Holding area for the things.
-  private AtomicReference<T> r = new AtomicReference<>(null);
+    // Holding area for the things.
+    private AtomicReference<T> r = new AtomicReference<>(null);
 
-  /**
-   * Stick it into the Atomic.
-   */
-  private Consumer<T> consumer = r::set;
+    /**
+     * Stick it into the Atomic.
+     */
+    private Consumer<T> consumer = r::set;
 
-  /**
-   * Pull it out.
-   */
-  private Supplier<T> producer = r::get;
+    /**
+     * Pull it out.
+     */
+    private Supplier<T> producer = r::get;
 
-  /**
-   * Transform Holder functions to BlockingQueue functions.
-   */
-  @Override
-  public T get() {
-    return producer.get();
-  }
+    /**
+     * Transform Holder functions to BlockingQueue functions.
+     */
+    @Override
+    public T get() {
+        return producer.get();
+    }
 
-  @Override
-  public void put(T it) {
-    consumer.accept(it);
-  }
+    @Override
+    public void put(T it) {
+        consumer.accept(it);
+    }
 
-  public static <T> Holder<T> make(Pipe p) {
-    // Ignore the pipe.
-    return new HoldAtomic<>();
-  }
+    public static <T> Holder<T> make(Pipe p) {
+        // Ignore the pipe.
+        return new HoldAtomic<>();
+    }
 }

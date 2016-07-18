@@ -22,7 +22,7 @@ import java.util.Set;
 
 /**
  * Adapts one type to a similar type.
- *
+ * <p>
  * Extend this and implement 'as' to convert F to T and
  * it will allow you to iterate over collections of type F
  * as if they were type T.
@@ -31,55 +31,55 @@ import java.util.Set;
  */
 // 
 public abstract class Adaptor<F, T> implements Iterable<T> {
-  // The iterable.
-  final Iterable<F> list;
+    // The iterable.
+    final Iterable<F> list;
 
-  public Adaptor(F[] fs) {
-    list = Arrays.asList(fs);
-  }
-
-  public Adaptor(List<F> l) {
-    list = l;
-  }
-
-  public Adaptor(Set<F> s) {
-    list = Iterables.in(s.iterator());
-  }
-
-  // Make a T out of an F - You write this.
-  public abstract T as(F f);
-
-  @Override
-  public Iterator<T> iterator() {
-    return new AdaptingIterator(list.iterator());
-  }
-
-  // Iterate across, converting on the fly.
-  private class AdaptingIterator implements Iterator<T> {
-    // The iterator I am adapting.
-    final Iterator<F> adapted;
-
-    public AdaptingIterator(Iterator<F> adapt) {
-      adapted = adapt;
+    public Adaptor(F[] fs) {
+        list = Arrays.asList(fs);
     }
+
+    public Adaptor(List<F> l) {
+        list = l;
+    }
+
+    public Adaptor(Set<F> s) {
+        list = Iterables.in(s.iterator());
+    }
+
+    // Make a T out of an F - You write this.
+    public abstract T as(F f);
 
     @Override
-    public boolean hasNext() {
-      // Forward hasNext to the underlying.
-      return adapted.hasNext();
+    public Iterator<T> iterator() {
+        return new AdaptingIterator(list.iterator());
     }
 
-    @Override
-    public T next() {
-      // Convert it on the fly.
-      return as(adapted.next());
-    }
+    // Iterate across, converting on the fly.
+    private class AdaptingIterator implements Iterator<T> {
+        // The iterator I am adapting.
+        final Iterator<F> adapted;
 
-    @Override
-    public void remove() {
-      // Forward remove to the underlying.
-      adapted.remove();
-    }
+        public AdaptingIterator(Iterator<F> adapt) {
+            adapted = adapt;
+        }
 
-  }
+        @Override
+        public boolean hasNext() {
+            // Forward hasNext to the underlying.
+            return adapted.hasNext();
+        }
+
+        @Override
+        public T next() {
+            // Convert it on the fly.
+            return as(adapted.next());
+        }
+
+        @Override
+        public void remove() {
+            // Forward remove to the underlying.
+            adapted.remove();
+        }
+
+    }
 }

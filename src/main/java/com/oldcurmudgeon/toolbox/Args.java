@@ -21,145 +21,144 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- *
- * @author Paul Caswell
  * @param <E>
+ * @author Paul Caswell
  */
 public class Args<E extends Enum<E> & Enums.ReverseLookup<E>> {
-  // The ons and offs.
-  private final Set<E> ons;
-  private final Set<E> offs;
-  private final Map<E, String> values;
+    // The ons and offs.
+    private final Set<E> ons;
+    private final Set<E> offs;
+    private final Map<E, String> values;
 
-  /**
-   * An arg can be on (+x), off(-x), contain data (/x=data) or not present.
-   */
-  public enum State {
-    On, Off, Data, Absent;
-  }
+    /**
+     * An arg can be on (+x), off(-x), contain data (/x=data) or not present.
+     */
+    public enum State {
+        On, Off, Data, Absent
+    }
 
-  /**
-   * All arg enums must reverse lookup.
-   *
-   * @param <E>
-   */
-  public interface Arg<E extends Enum<E>> extends Enums.ReverseLookup<E> {
+    /**
+     * All arg enums must reverse lookup.
+     *
+     * @param <E>
+     */
+    public interface Arg<E extends Enum<E>> extends Enums.ReverseLookup<E> {
 
-  }
+    }
 
-  /**
-   * Capture the command-line parameters.
-   *
-   * @param args
-   * @param of
-   */
-  public Args(String args[], Class<E> of) {
-    ons = EnumSet.<E>noneOf(of);
-    offs = EnumSet.<E>noneOf(of);
-    values = new EnumMap<>(of);
-    // Populate them.
-    for (String s : args) {
-      if (s != null && s.length() > 0) {
-        // Split on "=" if present.
-        String[] parts = s.split("=");
-        // What's the first character.
-        char first = s.charAt(0);
-        // What's the rest?
-        E arg = Enums.ReverseLookup.lookup(of, parts[0]);
-        if (arg == null) {
-          arg = Enums.ReverseLookup.lookup(of, parts[0].substring(1));
+    /**
+     * Capture the command-line parameters.
+     *
+     * @param args
+     * @param of
+     */
+    public Args(String args[], Class<E> of) {
+        ons = EnumSet.<E>noneOf(of);
+        offs = EnumSet.<E>noneOf(of);
+        values = new EnumMap<>(of);
+        // Populate them.
+        for (String s : args) {
+            if (s != null && s.length() > 0) {
+                // Split on "=" if present.
+                String[] parts = s.split("=");
+                // What's the first character.
+                char first = s.charAt(0);
+                // What's the rest?
+                E arg = Enums.ReverseLookup.lookup(of, parts[0]);
+                if (arg == null) {
+                    arg = Enums.ReverseLookup.lookup(of, parts[0].substring(1));
+                }
+                if (arg != null) {
+                    switch (first) {
+                        case '+':
+                            ons.add(arg);
+                            break;
+                        case '-':
+                            offs.add(arg);
+                            break;
+                        case '/':
+                            values.put(arg, parts[1] != null ? parts[1] : "");
+                            break;
+                        default:
+                            // No decoration - if theres an equals then it's a value, otherwise it's an on.
+                            if (parts.length > 1) {
+                                values.put(arg, parts[1]);
+                            } else {
+                                ons.add(arg);
+                            }
+                    }
+                } else {
+                    // Just ignore unexpected args.
+                    //System.err.println("Arg '" + s + "' invalid or unrecognised.");
+                }
+
+            }
         }
-        if (arg != null) {
-          switch (first) {
-            case '+':
-              ons.add(arg);
-              break;
-            case '-':
-              offs.add(arg);
-              break;
-            case '/':
-              values.put(arg, parts[1] != null ? parts[1] : "");
-              break;
-            default:
-              // No decoration - if theres an equals then it's a value, otherwise it's an on.
-              if (parts.length > 1) {
-                values.put(arg, parts[1]);
-              } else {
-                ons.add(arg);
-              }
-          }
-        } else {
-          // Just ignore unexpected args.
-          //System.err.println("Arg '" + s + "' invalid or unrecognised.");
+    }
+
+    /**
+     * Is this arg on/off/not present.
+     *
+     * @param a
+     * @return
+     */
+    public Set<State> is(E a) {
+        Set<State> state = EnumSet.noneOf(State.class);
+        if (ons.contains(a)) {
+            state.add(State.On);
         }
-
-      }
+        if (offs.contains(a)) {
+            state.add(State.Off);
+        }
+        return state;
     }
-  }
 
-  /**
-   * Is this arg on/off/not present.
-   *
-   * @param a
-   * @return
-   */
-  public Set<State> is(E a) {
-    Set<State> state = EnumSet.noneOf(State.class);
-    if (ons.contains(a)) {
-      state.add(State.On);
+    /**
+     * Get all ons.
+     */
+    public Set<E> ons() {
+        return ons;
     }
-    if (offs.contains(a)) {
-      state.add(State.Off);
+
+    /**
+     * Get all offs.
+     */
+    public Set<E> offs() {
+        return offs;
     }
-    return state;
-  }
 
-  /**
-   * Get all ons.
-   */
-  public Set<E> ons() {
-    return ons;
-  }
-
-  /**
-   * Get all offs.
-   */
-  public Set<E> offs() {
-    return offs;
-  }
-
-  /**
-   * Get the value behind this arg.
-   */
-  public String value(E e, String dflt) {
-    String v = values.get(e);
-    return v != null ? v : dflt;
-  }
-
-  /**
-   * Is this arg on?
-   */
-  public boolean on(E e) {
-    return ons.contains(e);
-  }
-
-  /**
-   * Is this arg off?
-   */
-  public boolean off(E e) {
-    return offs.contains(e);
-  }
-
-  public enum TestArgs implements Arg<TestArgs> {
-    Arg1, Arg2, Arg3, Arg4, Arg5;
-  }
-
-  public static void main(String args[]) {
-    try {
-      Args a = new Args(new String[]{"Arg1", "Arg2", "/Arg3=10", "+Arg4", "-Arg5"}, TestArgs.class);
-    } catch (Throwable t) {
-      t.printStackTrace(System.err);
+    /**
+     * Get the value behind this arg.
+     */
+    public String value(E e, String dflt) {
+        String v = values.get(e);
+        return v != null ? v : dflt;
     }
-  }
+
+    /**
+     * Is this arg on?
+     */
+    public boolean on(E e) {
+        return ons.contains(e);
+    }
+
+    /**
+     * Is this arg off?
+     */
+    public boolean off(E e) {
+        return offs.contains(e);
+    }
+
+    public enum TestArgs implements Arg<TestArgs> {
+        Arg1, Arg2, Arg3, Arg4, Arg5
+    }
+
+    public static void main(String args[]) {
+        try {
+            Args a = new Args(new String[]{"Arg1", "Arg2", "/Arg3=10", "+Arg4", "-Arg5"}, TestArgs.class);
+        } catch (Throwable t) {
+            t.printStackTrace(System.err);
+        }
+    }
 
 }

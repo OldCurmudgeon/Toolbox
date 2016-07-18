@@ -17,6 +17,7 @@ package com.oldcurmudgeon.toolbox.pipe.holder;
 
 import com.oldcurmudgeon.toolbox.pipe.Exceptions;
 import com.oldcurmudgeon.toolbox.pipe.Pipe;
+
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.function.Consumer;
@@ -24,38 +25,38 @@ import java.util.function.Supplier;
 
 public class HoldBlockingQueue<T> implements Holder<T> {
 
-  // Holding area for the things.
-  private BlockingQueue<T> q = new ArrayBlockingQueue(1);
+    // Holding area for the things.
+    private BlockingQueue<T> q = new ArrayBlockingQueue(1);
 
-  /**
-   * Consumer should take as little time as possible.
-   *
-   * Just push it into the queue.
-   */
-  private Consumer<T> consumer = Exceptions.rethrowConsumer(q::add);
+    /**
+     * Consumer should take as little time as possible.
+     * <p>
+     * Just push it into the queue.
+     */
+    private Consumer<T> consumer = Exceptions.rethrowConsumer(q::add);
 
-  /**
-   * Producer obtains the result - performing calculations as necessary.
-   *
-   * Pull it from the queue.
-   */
-  private Supplier<T> producer = Exceptions.rethrowSupplier(q::remove);
+    /**
+     * Producer obtains the result - performing calculations as necessary.
+     * <p>
+     * Pull it from the queue.
+     */
+    private Supplier<T> producer = Exceptions.rethrowSupplier(q::remove);
 
-  /**
-   * Transform Holder functions to BlockingQueue functions.
-   */
-  @Override
-  public T get() {
-    return producer.get();
-  }
+    /**
+     * Transform Holder functions to BlockingQueue functions.
+     */
+    @Override
+    public T get() {
+        return producer.get();
+    }
 
-  @Override
-  public void put(T it) {
-    consumer.accept(it);
-  }
+    @Override
+    public void put(T it) {
+        consumer.accept(it);
+    }
 
-  public static <T> Holder<T> make(Pipe p) {
-    // Ignore the pipe.
-    return new HoldBlockingQueue<>();
-  }
+    public static <T> Holder<T> make(Pipe p) {
+        // Ignore the pipe.
+        return new HoldBlockingQueue<>();
+    }
 }

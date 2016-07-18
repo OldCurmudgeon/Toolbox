@@ -16,28 +16,28 @@
 package com.oldcurmudgeon.toolbox.table;
 
 import com.oldcurmudgeon.toolbox.walkers.Separator;
+
 import java.util.Set;
 
 /**
- *
  * @author OldCurmudgeon
  */
 class Join<Column extends Enum<Column> & Table.Columns> {
 
-   Set<Column> key;
-   Table with;
+    Set<Column> key;
+    Table with;
 
-   public Join(Table with, Set<Column> key) {
-      this.with = with;
-      this.key = key;
-   }
+    public Join(Table with, Set<Column> key) {
+        this.with = with;
+        this.key = key;
+    }
 
-   public String join(String alias) {
-      String s = "LEFT JOIN " + with.tableName + " " + with.alias + " ON ";
-      Separator and = new Separator(" AND ");
-      for (Column c : key) {
-         s += and.sep() + alias + "." + c.name() + " = " + with.alias + "." + c.name();
-      }
-      return s;
-   }
+    public String join(String alias) {
+        String s = "LEFT JOIN " + with.tableName + " " + with.alias + " ON ";
+        Separator and = new Separator(" AND ");
+        for (Column c : key) {
+            s += and.sep() + alias + "." + c.name() + " = " + with.alias + "." + c.name();
+        }
+        return s;
+    }
 }

@@ -7,5 +7,5 @@ package com.oldcurmudgeon.toolbox.pipe;
  */
 public interface Output<T> {
 
-  public Pipe<T> put(T datum);
+    public Pipe<T> put(T datum);
 }

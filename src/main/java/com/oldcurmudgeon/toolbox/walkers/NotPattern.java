@@ -19,32 +19,31 @@ import java.math.BigInteger;
 import java.util.Iterator;
 
 /**
- *
  * @author Paul Caswell
  */
 public class NotPattern implements Iterable<BigInteger> {
-  private final Iterable it;
+    private final Iterable it;
 
-  public NotPattern(Iterable<BigInteger> it) {
-    this.it = it;
-  }
+    public NotPattern(Iterable<BigInteger> it) {
+        this.it = it;
+    }
 
-  @Override
-  public Iterator<BigInteger> iterator() {
-    return new Iterator<BigInteger>() {
-      private final Iterator<BigInteger> i = it.iterator();
+    @Override
+    public Iterator<BigInteger> iterator() {
+        return new Iterator<BigInteger>() {
+            private final Iterator<BigInteger> i = it.iterator();
 
-      @Override
-      public boolean hasNext() {
-        return i.hasNext();
-      }
+            @Override
+            public boolean hasNext() {
+                return i.hasNext();
+            }
 
-      @Override
-      public BigInteger next() {
-        return i.next().not();
-      }
+            @Override
+            public BigInteger next() {
+                return i.next().not();
+            }
 
-    };
-  }
+        };
+    }
 
 }

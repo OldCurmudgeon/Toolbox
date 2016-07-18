@@ -21,77 +21,77 @@ import java.util.Set;
 
 /**
  * <p>Title: PEDTracker</p>
- *
+ * <p>
  * <p>Description: Detect PED movements and raise alert if suspect.</p>
- *
+ * <p>
  * <p>Copyright: Copyright (c) 2009</p>
- *
+ * <p>
  * <p>Company: Sanderson RBS</p>
  *
  * @author OldCurmudgeon, Richard Perrott
  * @version 1.0
  */
 public class ID<Column extends Enum<Column> & Table.Columns> {
-  // My Columns.
-  // Not really needed but forces the subclass to initialise its columns correctly by doing a EnumSet.allOf(Column.class).
+    // My Columns.
+    // Not really needed but forces the subclass to initialise its columns correctly by doing a EnumSet.allOf(Column.class).
 
-  protected final Set<Column> columns;
-  // My fields. Holds the current fields.
-  protected final Fields<Column> fields;
+    protected final Set<Column> columns;
+    // My fields. Holds the current fields.
+    protected final Fields<Column> fields;
 
-  protected ID(Set<Column> columns) {
-    this.columns = columns;
-    fields = new Fields<>(columns);
-  }
-
-  public void setFields(Fields<Column> from) {
-    this.fields.copyCorresponding(from);
-  }
-
-  public void setIDField(Column column, String value) {
-    if (value == null) {
-      throw new NullPointerException("Null ID field");
+    protected ID(Set<Column> columns) {
+        this.columns = columns;
+        fields = new Fields<>(columns);
     }
-    if (value.length() == 0) {
-      throw new IllegalArgumentException("Zero length ID field");
+
+    public void setFields(Fields<Column> from) {
+        this.fields.copyCorresponding(from);
     }
-    fields.setField(column, value);
-  }
 
-  public void setField(Column column, String s) {
-    fields.setField(column, s);
-  }
+    public void setIDField(Column column, String value) {
+        if (value == null) {
+            throw new NullPointerException("Null ID field");
+        }
+        if (value.length() == 0) {
+            throw new IllegalArgumentException("Zero length ID field");
+        }
+        fields.setField(column, value);
+    }
 
-  public void setField(Column column, ResultSet rs) throws SQLException {
-    fields.setField(column, rs);
-  }
+    public void setField(Column column, String s) {
+        fields.setField(column, s);
+    }
 
-  public String getString(Column column) {
-    return fields.getString(column);
-  }
+    public void setField(Column column, ResultSet rs) throws SQLException {
+        fields.setField(column, rs);
+    }
 
-  public String toDb(Column column) {
-    return fields.getForDb(column);
-  }
+    public String getString(Column column) {
+        return fields.getString(column);
+    }
 
-  public Fields<Column> getFields() {
-    return fields;
-  }
+    public String toDb(Column column) {
+        return fields.getForDb(column);
+    }
 
-  public boolean equals(ID it) {
-    return toID().equals(it.toID());
-  }
+    public Fields<Column> getFields() {
+        return fields;
+    }
 
-  @Override
-  public String toString() {
-    // Override this always.
-    assert (false);
-    return "ID";
-  }
+    public boolean equals(ID it) {
+        return toID().equals(it.toID());
+    }
 
-  public String toID() {
-    // Override this always.
-    assert (false);
-    return "ID";
-  }
+    @Override
+    public String toString() {
+        // Override this always.
+        assert (false);
+        return "ID";
+    }
+
+    public String toID() {
+        // Override this always.
+        assert (false);
+        return "ID";
+    }
 }
