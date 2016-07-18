@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="49a453a1-00d1-4ab1-ac0b-75a86b7f12b7" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/oldcurmudgeon/toolbox/containers/IntervalTree.java" afterPath="$PROJECT_DIR$/src/main/java/com/oldcurmudgeon/toolbox/containers/IntervalTree.java" />
     </list>
     <ignored path="Toolbox.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -59,6 +58,11 @@
     </leaf>
   </component>
   <component name="Git.Settings">
+    <option name="PREVIOUS_COMMIT_AUTHORS">
+      <list>
+        <option value="Paul &lt;caswellpaula@aol.com&gt;" />
+      </list>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GradleLocalSettings">
@@ -710,12 +714,20 @@
       <updated>1468500328560</updated>
       <workItem from="1468500329764" duration="2906000" />
       <workItem from="1468508522740" duration="42000" />
-      <workItem from="1468830087331" duration="1888000" />
+      <workItem from="1468830087331" duration="1964000" />
     </task>
+    <task id="LOCAL-00001" summary="Tweaks">
+      <created>1468832024372</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1468832024372</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="4836000" />
+    <option name="totallyTimeSpent" value="4912000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -787,6 +799,12 @@
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
+  <component name="VcsManagerConfiguration">
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="CHECK_NEW_TODO" value="false" />
+    <MESSAGE value="Tweaks" />
+    <option name="LAST_COMMIT_MESSAGE" value="Tweaks" />
+  </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
     <watches-manager />
@@ -839,6 +857,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
           <caret line="16" column="34" selection-start-line="16" selection-start-column="34" selection-end-line="16" selection-end-column="34" />
+          <folding />
         </state>
       </provider>
     </entry>
