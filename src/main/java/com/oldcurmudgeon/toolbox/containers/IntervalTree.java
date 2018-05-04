@@ -49,11 +49,11 @@ public class IntervalTree<T extends IntervalTree.Interval> {
         // Find my center.
         center = findCenter();
 
-    /*
-     * Builds lefts out of all intervals that end below my center.
-     * Builds rights out of all intervals that start above my center.
-     * What remains contains all the intervals that contain my center.
-     */
+        /*
+         * Builds lefts out of all intervals that end below my center.
+         * Builds rights out of all intervals that start above my center.
+         * What remains contains all the intervals that contain my center.
+         */
         // Lefts contains all intervals that end below my center point.
         final List<T> lefts = new ArrayList<>();
         // Rights contains all intervals that start above my center point.
@@ -89,9 +89,9 @@ public class IntervalTree<T extends IntervalTree.Interval> {
         left = lefts.size() > 0 ? new IntervalTree<>(lefts) : null;
         right = rights.size() > 0 ? new IntervalTree<>(rights) : null;
 
-    /*
-     * @todo: Build my ascending and descending arrays.
-     */
+        /*
+         * @todo: Build my ascending and descending arrays.
+         */
     }
 
     /*
